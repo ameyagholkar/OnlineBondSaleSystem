@@ -6,9 +6,11 @@
     if(AuthorizationModule.checkCookie(request)||AuthorizationModule.checkCredentials(request,response)){
     	out.write("SUCCESS");
     	response.sendRedirect("index.jsp");
+    	return;
     }else{
     	if(request.getMethod().equalsIgnoreCase("POST")){
     		response.sendRedirect("login.jsp?invalid");
+    		return;
     	}
     }
      %>
