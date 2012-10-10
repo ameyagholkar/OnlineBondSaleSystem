@@ -102,4 +102,16 @@ public class QueryEngine {
 		return rs;
 	}
 	
+	public ResultSet query(String query) throws SQLException{
+		return connectionEngine.query(query);
+	}
+	
+	public ResultSet getBondsForGivenCustomerId(String customerId) throws SQLException{
+		return connectionEngine.query("select * from bonds b inner join (select g.id from groups g where g.participant_id='"+customerId+"') o on b.group_id=o.id");
+	}
+	
+	public ResultSet getBondsForGivenSessionId(String sessionId) throws SQLException{
+		return connectionEngine.query("select * from bonds b inner join (select g.id from groups g inner join (select c.id,c.username from customers c inner join login_session l on c.username=l.username where l.session_id='"+sessionId+"') cus on g.participant_id=cus.id) o on b.group_id=o.id");
+	}
+	
 }
