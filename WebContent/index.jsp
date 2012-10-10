@@ -1,7 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    
-<%@ page import="com.db.training.blb.ConnectionEngine" %>
+<%@ include file="common.jsp" %>
 <%@ page import="java.sql.ResultSet" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -12,8 +9,8 @@
 <body>
 
 <%
-	try {
-	ConnectionEngine engine=new ConnectionEngine();
+///*	try {
+/*	ConnectionEngine engine=new ConnectionEngine();
 	engine.connect();
 	engine.update("insert into test values(42)");
 	ResultSet resultSet = engine.query("select * from test");
@@ -24,7 +21,7 @@
 }catch (Exception e) {
   // other unexpected exception, print error message to the console
   out.println(e.toString());
-}
+}*/
 %>
 </body>
 </html>
