@@ -1,4 +1,4 @@
-package com.db.training.blb;
+package com.db.training.blb.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Engine{
+public class ConnectionEngine{
 	
 	private Connection connection;
 	private Statement statement;
