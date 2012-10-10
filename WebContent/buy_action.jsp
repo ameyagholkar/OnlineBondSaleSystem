@@ -8,6 +8,10 @@
 <title>Buy Bonds</title>
 </head>
 <body>
+<%
+out.println(request.getParameter("cusip"));
+out.println(request.getParameter("groupId"));
+%>
 
 </body>
 </html>

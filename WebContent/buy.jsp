@@ -21,15 +21,18 @@
 			resultSet.last();
 			int resultSize = resultSet.getRow();
 			resultSet.first();
-			// -- DEBUG ONLY out.println(resultSize);
+			// -- DEBUG out.println(resultSize);
 			int i = 0;
 			out.println("<form action='buy_action.jsp' method='POST'>");
 			out.println("<table border='1'>");
-			out.println("<tr><th></th><th>CUSIP</th><th>Rating</th><th>Coupon Rate</th><th>Current Yield (%)</th><th>Maturity Yield (%)</th><th>Maturity Date</th><th>Par Value</th><th>Price ($)</th><th>Quantity Available</th></tr>");
+			out.println("<tr><th></th><th>CUSIP</th><th>Bond Name</th><th>Bond Issuer</th><th>Rating</th><th>Coupon Rate</th><th>Current Yield (%)</th><th>Maturity Yield (%)</th><th>Maturity Date</th><th>Par Value</th><th>Price ($)</th><th>Quantity Available</th></tr>");
 			while (i < resultSize) {
 				out.println("<tr><td>");
-				out.println("<input type='radio' name='"+ resultSet.getString("cusip")  +"' value='"+ resultSet.getString("cusip")  +"'></td><td>");
+				out.println("<input type='hidden' name='groupId' value='"+ resultSet.getString("group_id")  +"'></td><td>");
+				out.println("<input type='radio' name='cusip' value='"+ resultSet.getString("cusip")  +"'></td><td>");
 				out.println(resultSet.getString("cusip") + "</td><td>"
+						+ resultSet.getString("bond_name") + "</td><td>"
+						+ resultSet.getString("issuer_name") + "</td><td>"
 						+ resultSet.getString("rating") + "</td><td>"
 						+ resultSet.getString("coupon_rate") + "</td><td>"
 						+ resultSet.getString("current_yield")
@@ -42,6 +45,7 @@
 						+ "</td><td>"
 						+ resultSet.getString("quantity_owned"));
 				out.println("</tr>");
+				resultSet.next();
 				i++;
 			}
 			out.println("</table>");
