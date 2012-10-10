@@ -72,6 +72,7 @@ insert into traders values (3, "HenryRitchotte", "henry");
 insert into traders values (4, "CarlsJunior", "carls");
 insert into traders values (5, "JimmyChoo", "jimmy");
 
+insert into customers values (0, "market", "password",0, 1000000, "Market", "nil", "nil");
 insert into customers values (1, "KanikaBansal", "kanika",1, 200, "Kanika Bansal", "1 Park Lane", "0744835463");
 insert into customers values (2, "AlexeyMoroz", "alexey",2, 2000, "Alexey Moroz", "1 Borough Lane", "0742335463");
 insert into customers values (3, "PhoebeBuffay", "phoebe",1, 300, "Phoebe Buffay", "5 Park Lane", "0744812363");
@@ -93,3 +94,9 @@ insert into bonds values ("0088a4567", "AAA", 10.00, 4.00, 3.50, '2018-7-04', 10
 ("0088a4573", "AAA", 10.00, 5.00, 3.50, '2018-2-04', 100, 103, 6, 10, "Google", "Google", 1),
 ("0008a4527", "AAA", 11.00, 4.00, 3.50, '2015-7-14', 100, 146, 7, 20, "Gilt", "UK Government", 0),
 ("0008a4527", "AAA", 11.00, 4.00, 3.50, '2015-7-14', 100, 145, 8, 30, "Gilt", "UK Government", 0);
+
+update blb.customers set password_hash=md5(password_hash);
+update blb.traders set password_hash=md5(password_hash);
+
+
+
