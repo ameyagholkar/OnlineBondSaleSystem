@@ -4,7 +4,7 @@
 <%@ page import="java.util.*"  %>
 <%@ page import="java.sql.*" %>
     <% 
-    //if(!(AuthorizationModule.checkCookie(request)|AuthorizationModule.checkCredentials(request,response))){
-    //	response.sendRedirect("login.jsp");
-    //}
+    if(!(AuthorizationModule.checkCookie(request)|AuthorizationModule.checkCredentials(request,response))){
+    	response.sendRedirect("login.jsp");
+    }
      %>

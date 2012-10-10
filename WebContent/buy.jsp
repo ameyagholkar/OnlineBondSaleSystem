@@ -9,7 +9,7 @@
 <title>Buy Bonds</title>
 </head>
 <body>
-	<h1>Bond Display and Buy Page</h1>
+	<h1>Bonds Available</h1>
 	<%
 		try {
 			ResultSet resultSet = new QueryEngine(new ConnectionEngine())
@@ -23,6 +23,7 @@
 			resultSet.first();
 			// -- DEBUG ONLY out.println(resultSize);
 			int i = 0;
+			out.println("<form action='buy_action.jsp' method='POST'>");
 			out.println("<table border='1'>");
 			out.println("<tr><th></th><th>CUSIP</th><th>Rating</th><th>Coupon Rate</th><th>Current Yield (%)</th><th>Maturity Yield (%)</th><th>Maturity Date</th><th>Par Value</th><th>Price ($)</th><th>Quantity Available</th></tr>");
 			while (i < resultSize) {
@@ -48,6 +49,9 @@
 			// other unexpected exception, print error message to the console
 			out.println(e.toString());
 		}
+	
+	out.println("<input type='submit' value='Buy' /> </form>");
+	
 	%>
 </body>
 </html>
