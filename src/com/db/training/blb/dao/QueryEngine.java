@@ -35,17 +35,21 @@ public class QueryEngine {
 		if(!rs.next()){
 			return null;
 		}
-		connectionEngine.update("update login_session set last_activity=now() where username="+rs.getString(1));
-		return rs.getString(1);
+		String user=rs.getString(1);
+		connectionEngine.update("update login_session set last_activity=now() where username='"+user+"'");
+		return user;
 	}
 	
 	public boolean checkUserCredentials(String username, String password) throws SQLException{
 		if(connectionEngine==null){
 			throw new RuntimeException("No connection engine was provided!");
 		}
+		if(username==null || password==null){
+			return false;
+		}
 		String user=username.replaceAll("'", "");
 		String pass=password.replaceAll("'", "");
-		ResultSet rs=connectionEngine.query("select count(t.username) from (select username  from blb.customers where username='"+user+"' and password_hash='"+pass+"' union select username from blb.traders where username='"+user+"' and password_hash='"+pass+"') t");
+		ResultSet rs=connectionEngine.query("select count(t.username) from (select username  from blb.customers where username='"+user+"' and password_hash=md5('"+pass+"') union select username from blb.traders where username='"+user+"' and password_hash=md5('"+pass+"')) t");
 		if(!rs.next()){
 			return false;
 		}else{
@@ -66,8 +70,8 @@ public class QueryEngine {
 		if(connectionEngine==null){
 			throw new RuntimeException("No connection engine was provided!");
 		}
-		connectionEngine.update("insert into login_session(session_id,username,last_activity) values (md5("+username+"+now()),"+username+",now())");
-		ResultSet rs=connectionEngine.query("select session_id from login_session where username="+username+" and abs(TIMESTAMPDIFF(MINUTE,now(),timestamp(last_activity)))<=1 limit 1");
+		connectionEngine.update("insert into login_session(session_id,username,last_activity) values (md5(concat('"+username+"',timestamp(now()))),'"+username+"',now())");
+		ResultSet rs=connectionEngine.query("select session_id from login_session where username='"+username+"' and abs(TIMESTAMPDIFF(MINUTE,now(),timestamp(last_activity)))<=1 limit 1");
 		if(!rs.next())
 			return null;
 		return rs.getString(1);

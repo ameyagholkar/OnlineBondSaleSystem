@@ -18,7 +18,7 @@ public class AuthorizationModule {
 		if(cs==null){
 			return false;
 		}
-	    List<Cookie> cookies=Arrays.asList();
+	    List<Cookie> cookies=Arrays.asList(cs);
 	    String sessionId="";
 	    for(Cookie cookie: cookies){
 	    	if(cookie.getName().equalsIgnoreCase("SESSION")){
@@ -30,8 +30,8 @@ public class AuthorizationModule {
 	
 	public static boolean checkCredentials(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException{
 		QueryEngine queryEngine=new QueryEngine(new ConnectionEngine());
-		String username="";
-		String password="";
+		String username=request.getParameter("username");
+		String password=request.getParameter("password");
 		if(queryEngine.checkUserCredentials(username, password)){
 			response.setHeader("Set-Cookie", "SESSION="+queryEngine.createSession(username)+"; Path=/");
 		}else{

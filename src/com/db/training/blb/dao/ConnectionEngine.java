@@ -34,7 +34,6 @@ public class ConnectionEngine{
 	}
 	
 	public void close() throws SQLException {
-		resultSet.close();
 		statement.close();
 		connection.close();
 	}
