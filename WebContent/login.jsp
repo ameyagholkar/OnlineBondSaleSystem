@@ -3,10 +3,13 @@
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.*"  %>
     <% 
-    if(!(AuthorizationModule.checkCookie(request)|AuthorizationModule.checkCredentials(request,response))){
-    	response.sendRedirect("login.jsp?invalid");
-    }else{
+    if(AuthorizationModule.checkCookie(request)||AuthorizationModule.checkCredentials(request,response)){
+    	out.write("SUCCESS");
     	response.sendRedirect("index.jsp");
+    }else{
+    	if(request.getMethod().equalsIgnoreCase("POST")){
+    		response.sendRedirect("login.jsp?invalid");
+    	}
     }
      %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -19,8 +22,8 @@
 	<form action="login.jsp" method=post>
 		Please, enter your user name and password:<br>
 		<%
-			if(request.getQueryString().equalsIgnoreCase("invalid")){
-				out.write("<span style='color: #cc0000'>Invalid credentials!</span>");
+			if(request.getQueryString()!=null?request.getQueryString().equalsIgnoreCase("invalid"):false){
+				out.write("<span style='color: #cc0000'>Invalid credentials!</span><br>");
 			}
 		%>
 		<input type="text" name="username" style="width: 217px; "><br>
