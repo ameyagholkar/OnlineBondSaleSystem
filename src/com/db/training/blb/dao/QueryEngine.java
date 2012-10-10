@@ -106,12 +106,26 @@ public class QueryEngine {
 		return connectionEngine.query(query);
 	}
 	
-	public ResultSet getBondsForGivenCustomerId(String customerId) throws SQLException{
-		return connectionEngine.query("select * from bonds b inner join (select g.id from groups g where g.participant_id='"+customerId+"') o on b.group_id=o.id");
+	/**
+	 * check if the trader can trade on behalf of this customer
+	 * @param customerId
+	 * @param traderSessionId
+	 * @return true if allowed to trade, false otherwise
+	 * @throws SQLException
+	 */
+	public boolean checkPortfolioManagementPermission(String customerId,String traderSessionId) throws SQLException{
+		return connectionEngine.query("select c.id,c.username from customers c inner join (select gg.participant_id from groups gg inner join (select g.id from groups g where g.participant_id=(select t.id from traders t inner join login_session l on t.username=l.username where l.session_id='"+traderSessionId+"' limit 1) and g.group_type<1) curtrdrgrps on curtrdrgrps.id=gg.id) cotrdrs on cotrdrs.participant_id=c.trader_id where c.id='"+customerId+"'").next();
+	}
+	
+	public ResultSet getBondsForGivenCustomerId(String customerId,String traderSessionId) throws SQLException{
+		if(!checkPortfolioManagementPermission(customerId, traderSessionId)){
+			throw new RuntimeException("You cannot manage this customer's portfolio.");
+		}
+		return connectionEngine.query("select b.bond_name as 'Bond Name', b.issuer_name as 'Issuer', (case when b.bond_type<1 then 'governmental' else 'corporate' end) as 'Type', b.cusip as 'CUSIP', b.rating as 'Rating', b.coupon_rate as 'Coupon Rate', b.current_yield as 'Current Yield', b.maturity_yield as 'Maturity Yield', b.maturity_date as 'Maturity Date', b.par_value as 'Par Value', b.price as 'Price', b.quantity_owned as 'Quantity' from bonds b inner join (select g.id from groups g where g.participant_id='"+customerId+"') o on b.group_id=o.id");
 	}
 	
 	public ResultSet getBondsForGivenSessionId(String sessionId) throws SQLException{
-		return connectionEngine.query("select * from bonds b inner join (select g.id from groups g inner join (select c.id,c.username from customers c inner join login_session l on c.username=l.username where l.session_id='"+sessionId+"') cus on g.participant_id=cus.id) o on b.group_id=o.id");
+		return connectionEngine.query("select b.bond_name as 'Bond Name', b.issuer_name as 'Issuer', (case when b.bond_type<1 then 'governmental' else 'corporate' end) as 'Type', b.cusip as 'CUSIP', b.rating as 'Rating', b.coupon_rate as 'Coupon Rate', b.current_yield as 'Current Yield', b.maturity_yield as 'Maturity Yield', b.maturity_date as 'Maturity Date', b.par_value as 'Par Value', b.price as 'Price', b.quantity_owned as 'Quantity' from bonds b inner join (select g.id from groups g inner join (select c.id,c.username from customers c inner join login_session l on c.username=l.username where l.session_id='"+sessionId+"') cus on g.participant_id=cus.id) o on b.group_id=o.id");
 	}
 	
 }
