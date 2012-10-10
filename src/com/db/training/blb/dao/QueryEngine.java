@@ -77,4 +77,29 @@ public class QueryEngine {
 		return rs.getString(1);
 	}
 	
+	
+	public ResultSet getListOfBonds() throws SQLException {
+		if(connectionEngine==null){
+			throw new RuntimeException("No connection engine was provided!");
+		}
+		
+		ResultSet rs = connectionEngine.query("select * from blb.bonds");
+		if(!rs.next()){
+			return null;
+		}
+		return rs;
+	}
+	
+	public ResultSet searchBonds() throws SQLException {
+		if(connectionEngine==null){
+			throw new RuntimeException("No connection engine was provided!");
+		}
+		
+		ResultSet rs = connectionEngine.query("select * from blb.bonds");
+		if(!rs.next()){
+			return null;
+		}
+		return rs;
+	}
+	
 }
