@@ -39,5 +39,9 @@ public class AuthorizationModule {
 		}
 		return true;
 	}
+	
+	public static void unauthorize(HttpServletRequest request, HttpServletResponse response){
+		response.setHeader("Set-Cookie", "SESSION=; Path=/");
+	}
 
 }
