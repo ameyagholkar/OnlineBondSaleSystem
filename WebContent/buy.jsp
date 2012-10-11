@@ -61,6 +61,9 @@
 					i++;
 				}
 				out.println("</table>");
+
+				out.println("<input type='hidden' name = 'criteria1' value = '"+ couponRateLow + "'>");
+				out.println("<input type='hidden' name = 'criteria2' value = '"+ couponRateHigh + "'>");
 				out.println("<input type='submit' value='Buy' /> </form>");
 			}
 		} catch (Exception e) {
@@ -68,6 +71,8 @@
 			out.println(e.toString());
 		}
 		out.println("<a href='search_bonds.jsp'>Return to Search Page</a>");
+
+		
 
 	%>
 </body>
