@@ -35,6 +35,8 @@
 			.checkPortfolioManagementPermission(customerId,
 					sessionId)){
 		out.println("Works!");
+		out.println(request.getParameter("total_amount"));
+		out.println(request.getParameter("cusip"));
 		// customer ID, Trader ID, Number of Bonds, Price, cusip, group id = 0
 	}else{
 		// TODO - Consult Team for Action to be taken here.

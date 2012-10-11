@@ -11,11 +11,9 @@
 		var quantity = document.getElementById("quantity").value;
 		var amount = quantity * price;
 		document.getElementById("amount").innerHTML = amount;
-
+		document.getElementById("total").value = amount;
 	}
-</script>
 
-<script type="text/javascript">
 	function submitType(submitType, customerId) {
 		if (submitType == 0)
 			document.userForm.action = "process_buy.jsp?customerId=" + customerId;
@@ -24,6 +22,12 @@
 			
 			document.userForm.action = "buy.jsp?customerId=" + customerId;
 			}
+	}
+	
+	function returnTotal() {
+		var amount = document.getElementById("amount").value;
+		//return amount;
+		document.getElementById("total").innerHTML = amount;
 	}
 </script>
 <% 
@@ -69,14 +73,7 @@ if(request.getParameter("customerId")==null){
 			out.println("</tr>");
 			out.println("</table>");
 
-			out.println("<p></p>");
-
-			//out.println("<table border='1'>");
-			//out.println("<tr><th>Quantity Available</th><td>"+ resultSet.getString("quantity_owned")+"</td></tr>");
-			//out.println("<tr><th name='quantity'>Please enter quantity to buy</th><td><input type = 'int' name = 'quantity'></td></tr>");
-
-			int quantity;
-			double amount = 0.0;
+			out.println("<br>");
 
 			out.println("<p>Quantity Available  "
 					+ resultSet.getString("quantity_owned") + "</p>");
@@ -87,6 +84,15 @@ if(request.getParameter("customerId")==null){
 			out.println("<form name ='userForm' method = 'POST'>");
 
 			out.println("<table><tr><td>Total purchase amount ($)</td><td id='amount'></td></tr></table>");
+			out.println("<input type='hidden' name = 'cusip' value = '"
+					+ cusip + "'>");
+			out.println("<input type='hidden' name = 'rating' value = '"
+					+ resultSet.getString("rating") + "'>");
+			out.println("<input type='hidden' name = 'price' value = '"
+					+ price + "'>");
+			out.println("<input type='hidden' name = 'total_amount' id = 'total'>");
+		
+			
 			out.println("<input type='submit' value= 'Buy' onClick = 'submitType(0, "+request.getParameter("customerId")+")'>");
 
 			out.println("<input type='hidden' name = 'coupon_rate_low' value = '"
