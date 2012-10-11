@@ -6,6 +6,7 @@
 <head>
 <%@ include file="favicon.jsp"%>
 <link href="menu_assets/styles.css" rel="stylesheet" type="text/css">
+<link href="table_assets/style.css" rel="stylesheet" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <script type="text/javascript">
 	function calculation(price) {
@@ -40,7 +41,7 @@ if(request.getParameter("customerId")==null){
 <title>Buy Bonds</title>
 </head>
 <body>
-	<%@ include file="header.jsp"%>
+	<%@ include file="header.jsp" %>
 	<div id='cssmenu'>
 		<ul>
 			<li><a href='index.jsp'><span>Home/Portfolio
@@ -78,8 +79,8 @@ if(request.getParameter("customerId")==null){
 			double price = Double.parseDouble(resultSet.getString("price"));
 			//out.println("price = "+price);
 
-			out.println("<table border='1'>");
-			out.println("<tr><th>CUSIP</th><th>Bond Name</th><th>Issuer Name</th><th>Rating</th><th>Current Yield (%)</th><th>Yield to Maturity (%)</th><th>Coupon</th><th>Maturity Date</th><th>Price ($)</th></tr>");
+			out.println("<table border='1' id='newspaper-b'>");
+			out.println("<tr><thead><th>CUSIP</th><th>Bond Name</th><th>Issuer Name</th><th>Rating</th><th>Current Yield (%)</th><th>Yield to Maturity (%)</th><th>Coupon</th><th>Maturity Date</th><th>Price ($)</th></thead></tr>");
 			out.println("<tr><td>" + cusip + "</td> <td>"
 					+ resultSet.getString("bond_name") + "</td><td>"
 					+ resultSet.getString("issuer_name") + "</td><td>"

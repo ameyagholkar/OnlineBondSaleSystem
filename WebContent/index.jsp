@@ -6,10 +6,11 @@
 <head>
 <%@ include file="favicon.jsp" %>
 <link href="menu_assets/styles.css" rel="stylesheet" type="text/css">
+<link href="table_assets/style.css" rel="stylesheet" type="text/css">
 <title>Online Wholesaler</title>
 </head>
 <body>
-<%@ include file="header.jsp"%>
+<%@ include file="header.jsp" %>
 <div id='cssmenu'>
 <ul>
    <li class='active '><a href='index.jsp'><span>Home/Portfolio Management</span></a></li>
@@ -26,14 +27,14 @@
 		if(rs.next()){
 			%>
 			<br>
-			<table border=1 cellpading=0 cellspacing=0>
-				<tr>
+			<table border=1 cellpading=0 cellspacing=0 id="newspaper-b">
+				<tr><thead>
 					<%
 						for(int i=2;i<=metaData.getColumnCount();i++){
 							out.write("<th>"+metaData.getColumnLabel(i)+"</th>");
 						}
 					%>
-				</tr>
+				</thead></tr>
 				<tbody>
 					<%
 						do{
@@ -60,19 +61,19 @@
 		if(rs.next()){
 			%>
 			<br>
-			<table border=1 cellpading=0 cellspacing=0>
-				<tr>
+			<table border=1 cellpading=0 cellspacing=0 id="newspaper-b">
+				<tr><thead>
 					<%
 						for(int i=1;i<=metaData.getColumnCount();i++){
 							out.write("<th>"+metaData.getColumnLabel(i)+"</th>");
 						}
 					%>
-				</tr>
+				</thead></tr>
 				<tbody>
 					<%
 						do{
 							out.write("<tr>");
-							for(int i=1;i<=metaData.getColumnCount();i++){
+							for(int i=1;i <= metaData.getColumnCount();i++){
 								out.write("<td>"+rs.getString(i)+"</td>");
 							}
 							out.write("<tr>");

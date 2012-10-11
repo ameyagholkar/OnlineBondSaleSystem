@@ -8,6 +8,7 @@
 <head>
 <%@ include file="favicon.jsp"%>
 <link href="menu_assets/styles.css" rel="stylesheet" type="text/css">
+<link href="table_assets/style.css" rel="stylesheet" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Buy Bonds</title>
 </head>
@@ -70,8 +71,8 @@
 				out.println("<form action='buy_action.jsp?customerId="
 						+ request.getParameter("customerId")
 						+ "' method='POST'>");
-				out.println("<table border='1'>");
-				out.println("<tr><th></th><th>CUSIP</th><th>Bond Name</th><th>Bond Issuer</th><th>Rating</th><th>Coupon Rate</th><th>Current Yield (%)</th><th>Maturity Yield (%)</th><th>Maturity Date</th><th>Par Value</th><th>Price ($)</th><th>Quantity Available</th></tr>");
+				out.println("<table border='1' id='newspaper-b'>");
+				out.println("<thead><tr><th></th><th>CUSIP</th><th>Bond Name</th><th>Bond Issuer</th><th>Rating</th><th>Coupon Rate</th><th>Current Yield (%)</th><th>Maturity Yield (%)</th><th>Maturity Date</th><th>Par Value</th><th>Price ($)</th><th>Quantity Available</th></tr></thead>");
 				while (i < resultSize) {
 					out.println("<tr>");
 					out.println("<td><input type='radio' name='cusip' value='"

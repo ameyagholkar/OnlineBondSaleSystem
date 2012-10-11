@@ -119,6 +119,7 @@ public class BondModule {
 								String.valueOf(userGroupId));
 
 			}
+			//Get Trader ID
 			return 1;
 
 		} catch (Exception e) {
