@@ -37,7 +37,7 @@ public class ConnectionEngine{
 
 			}
 		}
-		statement.executeUpdate(query);
+		statement.executeUpdate();
 		connection.commit();
 	}
 	
@@ -55,7 +55,7 @@ public class ConnectionEngine{
 
 			}
 		}
-		resultSet = statement.executeQuery(query);
+		resultSet = statement.executeQuery();
 		connection.commit();
 		return resultSet;
 	}
