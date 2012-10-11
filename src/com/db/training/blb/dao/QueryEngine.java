@@ -84,6 +84,10 @@ public class QueryEngine {
 		return connectionEngine.query(query,args);
 	}
 	
+	public ResultSet getTraderIdFromSessionId(String sessionId) throws SQLException {
+		return connectionEngine.query("select t.id from traders t join login_session s on t.username = s.username and s.session_id=?", sessionId);
+	}
+	
 	/**
 	 * check if the trader can trade on behalf of this customer
 	 * @param customerId

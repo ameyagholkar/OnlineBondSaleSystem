@@ -1,3 +1,4 @@
+<%@page import="com.db.training.blb.BondModule"%>
 <%@page import="com.db.training.blb.dao.ConnectionEngine"%>
 <%@page import="com.db.training.blb.dao.QueryEngine"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -9,15 +10,26 @@
 <html>
 <head>
 <%@ include file="favicon.jsp"%>
+<link href="menu_assets/styles.css" rel="stylesheet" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Bond Purchase Confirmation</title>
+</head>
+<body>
 <%
 	// Processing for finalizing the bond purchase
-	// Redirect to index Page if the customer id is not set.
-	String cusip = "0088a4573";
+	// Redirect to index Page if the customer id is not set.		
 	if (request.getParameter("customerId") == null) {
 		response.sendRedirect("index.jsp");
 	}
+	//Get the required data from the previous page
+	String cusip = request.getParameter("cusip");
+	String numOfBonds = request.getParameter("quantity");
+	String totalPrice = request.getParameter("total_amount");
+	
+	//DEBUG --
+	out.println(cusip + "  " + numOfBonds + "  " + totalPrice );
+
+	//Get the Cookie for Trader ID
 	Cookie[] cs = request.getCookies();
 	if (cs == null) {
 		response.sendRedirect("login.jsp");
@@ -29,19 +41,30 @@
 			sessionId = cookie.getValue().trim();
 		}
 	}
-	String customerId = request
-			.getParameter("customerId");
+	String customerId = request.getParameter("customerId");
+	//Check if Trader is authorized to make purchases
 	if (new QueryEngine(new ConnectionEngine())
-			.checkPortfolioManagementPermission(customerId,
-					sessionId)){
+			.checkPortfolioManagementPermission(customerId, sessionId)) {
 		out.println("Works!");		
 		// customer ID, Trader ID, Number of Bonds, Price, cusip, group id = 0
-	}else{
+		BondModule bondModule = new BondModule();
+		//Call Process Order
+		int status = bondModule.processBondOrder(cusip, numOfBonds, customerId, totalPrice);
+		if( status == 1){
+			out.println("Done!");
+			response.sendRedirect("buy_confirmation.jsp?status=1&customerId=" + customerId);
+		}else if(status == 0){
+			out.println("Exceptions!");
+			response.sendRedirect("buy_confirmation.jsp?status=0&customerId=" + customerId);
+		}else if(status == 2){
+			response.sendRedirect("search_bonds.jsp?invalid=1&customerId=" + customerId);
+		}else if(status == 3){
+			response.sendRedirect("search_bonds.jsp?invalid=2&customerId=" + customerId);
+		}
+	} else {
 		// TODO - Consult Team for Action to be taken here.
 	}
 %>
-</head>
-<body>
 
 </body>
 </html>

@@ -7,17 +7,34 @@
 <html>
 <head>
 <%@ include file="favicon.jsp"%>
+<link href="menu_assets/styles.css" rel="stylesheet" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Buy Bonds</title>
 </head>
 <body>
+	<%@ include file="header.jsp"%>
+	<div id='cssmenu'>
+		<ul>
+			<li ><a href='index.jsp'><span>Home/Portfolio
+						Management</span></a></li>
+			<%
+				if (request.getParameter("customerId") != null
+						&& (!request.getParameter("customerId")
+								.equalsIgnoreCase(""))) {
+			%>
+			<li class='active '><a
+				href='search_bonds.jsp?customerId=<%=request.getParameter("customerId")%>'><span>Buy</span></a></li>
+			<%
+				}
+			%>
+			<li><a href='logout.jsp'><span>Logout</span></a></li>
+		</ul></div>
 	<%
 		//Redirect to index Page if the customer id is not set
 		if (request.getParameter("customerId") == null) {
 			response.sendRedirect("index.jsp");
 		}
 	%>
-	<%@ include file="header.jsp"%>
 	<h1>Bonds Available</h1>
 	<%
 		// DEBUG -- out.println(request.getParameter("coupon_rate_low"));

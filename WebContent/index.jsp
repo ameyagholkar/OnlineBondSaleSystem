@@ -9,6 +9,7 @@
 <title>Online Wholesaler</title>
 </head>
 <body>
+<%@ include file="header.jsp"%>
 <div id='cssmenu'>
 <ul>
    <li class='active '><a href='index.jsp'><span>Home/Portfolio Management</span></a></li>
@@ -24,6 +25,7 @@
 		ResultSetMetaData metaData=rs.getMetaData();
 		if(rs.next()){
 			%>
+			<br>
 			<table border=1 cellpading=0 cellspacing=0>
 				<tr>
 					<%
@@ -57,6 +59,7 @@
 		ResultSetMetaData metaData=rs.getMetaData();
 		if(rs.next()){
 			%>
+			<br>
 			<table border=1 cellpading=0 cellspacing=0>
 				<tr>
 					<%

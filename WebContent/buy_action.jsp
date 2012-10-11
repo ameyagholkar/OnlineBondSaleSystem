@@ -5,6 +5,7 @@
 <html>
 <head>
 <%@ include file="favicon.jsp"%>
+<link href="menu_assets/styles.css" rel="stylesheet" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <script type="text/javascript">
 	function calculation(price) {
@@ -16,7 +17,7 @@
 
 	function submitType(submitType, customerId) {
 		if (submitType == 0)
-			document.userForm.action = "process_buy.jsp?customerId=" + customerId;
+			document.userForm.action = "process_buy.jsp?customerId=" + customerId + "&quantity=" + document.getElementById("quantity").value;
 		else
 			{
 			
@@ -39,6 +40,24 @@ if(request.getParameter("customerId")==null){
 <title>Buy Bonds</title>
 </head>
 <body>
+	<%@ include file="header.jsp"%>
+	<div id='cssmenu'>
+		<ul>
+			<li><a href='index.jsp'><span>Home/Portfolio
+						Management</span></a></li>
+			<%
+				if (request.getParameter("customerId") != null
+						&& (!request.getParameter("customerId")
+								.equalsIgnoreCase(""))) {
+			%>
+			<li class='active '><a
+				href='search_bonds.jsp?customerId=<%=request.getParameter("customerId")%>'><span>Buy</span></a></li>
+			<%
+				}
+			%>
+			<li><a href='logout.jsp'><span>Logout</span></a></li>
+		</ul>
+	</div>
 	<h1>Buy Local Bonds: Purchase Order</h1>
 
 	<%

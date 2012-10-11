@@ -24,6 +24,10 @@ public class ConnectionEngine{
 		return connection;
 	}
 	
+	public synchronized void destroyConnection() throws SQLException {
+		connection.close();
+	}
+	
 	public void update(String query) throws SQLException{
 		statement.executeUpdate(query);
 	}

@@ -1,88 +1,82 @@
-/* Let's import the lovely google font, please keep this line at the top of your stylesheet */
-
-@import url(http://fonts.googleapis.com/css?family=Capriola);
-
-
-
-/* Menu CSS */ 
-
-#cssmenu, #cssmenu ul, #cssmenu ul li, #cssmenu ul li a{
-	
-	padding: 0;
-	margin: 0;
-	line-height: 1;
-	font-family: 'Capriola', sans-serif;
-	
-}
-
-#cssmenu:before, #cssmenu:after, #cssmenu > ul:before, #cssmenu > ul:after {
-
-	content: '';
-	display: table;
-	
-}
-
-
-#cssmenu:after, #cssmenu > ul:after {
-
-	clear: both;
-	
-}
-
-#cssmenu {
-
-	zoom:1;
-	height: 69px;
-	background: url(images/bottom-bg.png) repeat-x center bottom;
-	border-radius: 2px;
-	
-}
-
+#cssmenu{
+	border:none;
+	border:0px;
+	margin:0px;
+	padding:0px;
+	font-family:verdana,geneva,arial,helvetica,sans-serif;
+	font-size:14px;
+	font-weight:bold;
+	color:8e8e8e;
+	}
 #cssmenu ul{
-
-	background: url(images/nav-bg.png) repeat-x 0px 4px;
-	height: 69px;
-	
-}
-
-#cssmenu ul li{
-
-	float: left;
-	list-style: none;
-	
-}
-
-#cssmenu ul li a{
-	
-	display: block;
-	height: 37px;
-	padding: 22px 30px 0;
-	margin: 4px 2px 0;
-	border-radius: 2px 2px 0 0;
-	text-decoration: none;
-	font-size: 15px;
-	color: white;
-	text-shadow: 0 1px 1px rgba(0, 0, 0, .75);
-	font-weight: 400;
-	opacity: .9;
-	
-}
-
-#cssmenu ul li:first-child a{
-	
-	margin: 4px 2px 0 0;
-	
-}
-
-#cssmenu ul li a:hover, #cssmenu ul li.active a{
-	
-	background: url(images/color.png) center bottom;
-	display: block;
-	height: 37px;
-	margin-top: 0px;
-	padding-top: 26px;
-	color: #004f7c;
-	text-shadow: 0 1px 1px rgba(255, 255, 255, .55);
-	opacity: 1;
-	
-}
+	background:url(images/menu-bg.gif) top left repeat-x;
+	height:43px;
+	list-style:none;
+	margin:0;
+	padding:0;
+	}
+	#cssmenu li{
+		float:left;
+		padding:0px 8px 0px 8px;
+		}
+	#cssmenu li a{
+		color:#666666;
+		display:block;
+		font-weight:bold;
+		line-height:43px;
+		padding:0px 25px;
+		text-align:center;
+		text-decoration:none;
+		}
+		#cssmenu li a:hover{
+			color:#000000;
+			text-decoration:none;
+			}
+	#cssmenu li ul{
+		background:#e0e0e0;
+		border-left:2px solid #0079b2;
+		border-right:2px solid #0079b2;
+		border-bottom:2px solid #0079b2;
+		display:none;
+		height:auto;
+		filter:alpha(opacity=95);
+		opacity:0.95;
+		position:absolute;
+		width:225px;
+		z-index:200;
+		/*top:1em;
+		/*left:0;*/
+		}
+	#cssmenu li:hover ul{
+		display:block;
+		}
+	#cssmenu li li {
+		display:block;
+		float:none;
+		padding:0px;
+		width:225px;
+		}
+	#cssmenu li ul a{
+		display:block;
+		font-size:12px;
+		font-style:normal;
+		padding:0px 10px 0px 15px;
+		text-align:left;
+		}
+		#cssmenu li ul a:hover{
+			background:#949494;
+			color:#000000;
+			opacity:1.0;
+			filter:alpha(opacity=100);
+			}
+	#cssmenu p{
+		clear:left;
+		}	
+	#cssmenu .active > a{
+		background:url(images/current-bg.gif) top left repeat-x;
+		color:#ffffff;
+		}
+	#cssmenu .active > a:hover {
+		color:#ffffff;
+		}
+		
