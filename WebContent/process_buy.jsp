@@ -34,9 +34,7 @@
 	if (new QueryEngine(new ConnectionEngine())
 			.checkPortfolioManagementPermission(customerId,
 					sessionId)){
-		out.println("Works!");
-		out.println(request.getParameter("total_amount"));
-		out.println(request.getParameter("cusip"));
+		out.println("Works!");		
 		// customer ID, Trader ID, Number of Bonds, Price, cusip, group id = 0
 	}else{
 		// TODO - Consult Team for Action to be taken here.
