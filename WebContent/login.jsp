@@ -21,15 +21,16 @@
 <title>Online Wholesaler</title>
 </head>
 <body>
+<%@ include file="header.jsp" %>
 	<form action="login.jsp" method=post>
-		Please, enter your user name and password:<br>
+		Sign in<hr><br>
 		<%
 			if(request.getQueryString()!=null?request.getQueryString().equalsIgnoreCase("invalid"):false){
 				out.write("<span style='color: #cc0000'>Invalid credentials!</span><br>");
 			}
 		%>
-		<input type="text" name="username" style="width: 217px; "><br>
-		<input type="password" name="password" style="width: 218px; ">
+		Username<br><input type="text" name="username" style="width: 217px; "><br>
+		Password<br><input type="password" name="password" style="width: 218px; ">
 		<input type="submit" value="Sign In" style="width: 118px; height: 28px">
 	</form>
 </body>

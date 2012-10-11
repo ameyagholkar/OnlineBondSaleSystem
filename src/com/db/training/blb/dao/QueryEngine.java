@@ -78,12 +78,12 @@ public class QueryEngine {
 	}
 	
 	
-	public ResultSet getListOfBonds() throws SQLException {
+	public ResultSet getListOfBonds(double couponRateLow, double couponRateHigh) throws SQLException {
 		if(connectionEngine==null){
 			throw new RuntimeException("No connection engine was provided!");
 		}
 		
-		ResultSet rs = connectionEngine.query("select * from blb.bonds");
+		ResultSet rs = connectionEngine.query("select * from blb.bonds where coupon_rate between " + couponRateLow + "and " + couponRateHigh);
 		if(!rs.next()){
 			return null;
 		}
