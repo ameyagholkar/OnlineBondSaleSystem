@@ -104,4 +104,16 @@ public class QueryEngine {
 		return connectionEngine.query("select b.bond_name as 'Bond Name', b.issuer_name as 'Issuer', (case when b.bond_type<1 then 'governmental' else 'corporate' end) as 'Type', b.cusip as 'CUSIP', b.rating as 'Rating', b.coupon_rate as 'Coupon Rate', b.current_yield as 'Current Yield', b.maturity_yield as 'Maturity Yield', b.maturity_date as 'Maturity Date', b.par_value as 'Par Value', b.price as 'Price', b.quantity_owned as 'Quantity' from bonds b inner join (select g.id from groups g inner join (select c.id,c.username from customers c inner join login_session l on c.username=l.username where l.session_id=?) cus on g.participant_id=cus.id) o on b.group_id=o.id",sessionId);
 	}
 	
+	public ResultSet getBondData(String cusip) throws SQLException {
+		if(connectionEngine==null){
+			throw new RuntimeException("No connection engine was provided!");
+		}
+		
+		ResultSet rs = connectionEngine.query("select * from blb.bonds where CUSIP =? AND group_id ='0'",cusip);
+		if(!rs.next()){
+			return null;
+		}
+		return rs;
+	}
+	
 }
