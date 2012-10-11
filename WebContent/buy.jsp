@@ -1,6 +1,7 @@
 
 <%@page import="com.db.training.blb.dao.ConnectionEngine"%>
 <%@page import="com.db.training.blb.dao.QueryEngine"%>
+<%@page import="com.db.training.blb.BondModule"%>
 <%@ include file="common.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -22,8 +23,7 @@
 				.getParameter("coupon_rate_high"));
 
 		try {
-			ResultSet resultSet = new QueryEngine(new ConnectionEngine())
-					.getListOfBonds(couponRateLow, couponRateHigh);
+			ResultSet resultSet = new BondModule().getListOfBonds(couponRateLow, couponRateHigh);
 
 			if (resultSet == null) {
 				out.println("<h1>No Bonds found!</h1>");
