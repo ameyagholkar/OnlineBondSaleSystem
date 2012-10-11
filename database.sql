@@ -93,7 +93,7 @@ insert into groups values (8, 1, 5);
 
 insert into bonds values ("0088a4567", "AAA", 10.00, 4.00, 3.50, '2018-7-04', 100, 123, 0, 10, "Microsoft", "Microsoft", 1),
 ("0088a4573", "AAA", 10.00, 5.00, 3.50, '2018-2-04', 100, 103, 0, 10, "Google", "Google", 1),
-("0008a4527", "AAA", 11.00, 4.00, 3.50, '2015-7-14', 100, 146, 0, 20, "Gilt", "UK Government", 0),
+("0008a4527", "AAA", 11.00, 4.00, 3.50, '2015-7-14', 100, 146, 1, 20, "Gilt", "UK Government", 0),
 ("0008a4527", "AAA", 11.00, 4.00, 3.50, '2015-7-14', 100, 145, 0, 30, "Gilt", "UK Government", 0);
 
 update blb.customers set password_hash=md5(password_hash);
