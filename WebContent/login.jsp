@@ -19,10 +19,28 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Online Wholesaler</title>
+<script type="text/javascript">
+	function validateForm()
+	{
+	var x=document.forms["loginForm"]["username"].value;
+	var y=document.forms["loginForm"]["password"].value;
+	if (x==null || x=="")
+	  {
+	  alert("Username cannot be blank!");
+	  return false;
+	  }
+	
+	if (y==null || y=="")
+	  {
+	  alert("Password cannot be blank!");
+	  return false;
+	  }
+	}
+</script>
 </head>
 <body>
 <%@ include file="header.jsp" %>
-	<form action="login.jsp" method=post>
+	<form action="login.jsp" method=post name="loginForm" onsubmit=' return validateForm()'>
 		Sign in<hr><br>
 		<%
 			if(request.getQueryString()!=null?request.getQueryString().equalsIgnoreCase("invalid"):false){
