@@ -23,20 +23,20 @@ public class QueryEngine {
 		return connectionEngine;
 	}
 
-	public void setConnEng(ConnectionEngine connEng) {
-		this.connectionEngine = connEng;
+	public void setConnectionEngine(ConnectionEngine connectionEngine) {
+		this.connectionEngine = connectionEngine;
 	}
 	
 	public String getUserForSessionId(String sessionId) throws SQLException{
 		if(connectionEngine==null){
 			throw new RuntimeException("No connection engine was provided!");
 		}
-		ResultSet rs=connectionEngine.query("select username from blb.login_session where session_id='"+sessionId.replaceAll("'", "")+"' and abs(TIMESTAMPDIFF(MINUTE,now(),timestamp(last_activity)))<=5 limit 1");
+		ResultSet rs=connectionEngine.query("select username from blb.login_session where session_id=? and abs(TIMESTAMPDIFF(MINUTE,now(),timestamp(last_activity)))<=5 limit 1",sessionId);
 		if(!rs.next()){
 			return null;
 		}
 		String user=rs.getString(1);
-		connectionEngine.update("update login_session set last_activity=now() where username='"+user+"'");
+		connectionEngine.update("update login_session set last_activity=now() where username=?",user);
 		return user;
 	}
 	
@@ -47,9 +47,7 @@ public class QueryEngine {
 		if(username==null || password==null){
 			return false;
 		}
-		String user=username.replaceAll("'", "");
-		String pass=password.replaceAll("'", "");
-		ResultSet rs=connectionEngine.query("select count(t.username) from (select username  from blb.customers where username='"+user+"' and password_hash=md5('"+pass+"') union select username from blb.traders where username='"+user+"' and password_hash=md5('"+pass+"')) t");
+		ResultSet rs=connectionEngine.query("select count(t.username) from (select username  from blb.customers where username=? and password_hash=md5(?) union select username from blb.traders where username=? and password_hash=md5(?)) t",username,password,username,password);
 		if(!rs.next()){
 			return false;
 		}else{
@@ -70,8 +68,8 @@ public class QueryEngine {
 		if(connectionEngine==null){
 			throw new RuntimeException("No connection engine was provided!");
 		}
-		connectionEngine.update("insert into login_session(session_id,username,last_activity) values (md5(concat('"+username+"',timestamp(now()))),'"+username+"',now())");
-		ResultSet rs=connectionEngine.query("select session_id from login_session where username='"+username+"' and abs(TIMESTAMPDIFF(MINUTE,now(),timestamp(last_activity)))<=1 limit 1");
+		connectionEngine.update("insert into login_session(session_id,username,last_activity) values (md5(concat(?,timestamp(now()))),?,now())",username,username);
+		ResultSet rs=connectionEngine.query("select session_id from login_session where username=? and abs(TIMESTAMPDIFF(MINUTE,now(),timestamp(last_activity)))<=1 limit 1", username);
 		if(!rs.next())
 			return null;
 		return rs.getString(1);
@@ -80,8 +78,8 @@ public class QueryEngine {
 	
 
 	
-	public ResultSet query(String query) throws SQLException{
-		return connectionEngine.query(query);
+	public ResultSet query(String query, String... args) throws SQLException{
+		return connectionEngine.query(query,args);
 	}
 	
 	/**
@@ -92,18 +90,18 @@ public class QueryEngine {
 	 * @throws SQLException
 	 */
 	public boolean checkPortfolioManagementPermission(String customerId,String traderSessionId) throws SQLException{
-		return connectionEngine.query("select c.id,c.username from customers c inner join (select gg.participant_id from groups gg inner join (select g.id from groups g where g.participant_id=(select t.id from traders t inner join login_session l on t.username=l.username where l.session_id='"+traderSessionId+"' limit 1) and g.group_type<1) curtrdrgrps on curtrdrgrps.id=gg.id) cotrdrs on cotrdrs.participant_id=c.trader_id where c.id='"+customerId+"'").next();
+		return connectionEngine.query("select c.id,c.username from customers c inner join (select gg.participant_id from groups gg inner join (select g.id from groups g where g.participant_id=(select t.id from traders t inner join login_session l on t.username=l.username where l.session_id=? limit 1) and g.group_type<1) curtrdrgrps on curtrdrgrps.id=gg.id) cotrdrs on cotrdrs.participant_id=c.trader_id where c.id=?",traderSessionId,customerId).next();
 	}
 	
 	public ResultSet getBondsForGivenCustomerId(String customerId,String traderSessionId) throws SQLException{
 		if(!checkPortfolioManagementPermission(customerId, traderSessionId)){
 			throw new RuntimeException("You cannot manage this customer's portfolio.");
 		}
-		return connectionEngine.query("select b.bond_name as 'Bond Name', b.issuer_name as 'Issuer', (case when b.bond_type<1 then 'governmental' else 'corporate' end) as 'Type', b.cusip as 'CUSIP', b.rating as 'Rating', b.coupon_rate as 'Coupon Rate', b.current_yield as 'Current Yield', b.maturity_yield as 'Maturity Yield', b.maturity_date as 'Maturity Date', b.par_value as 'Par Value', b.price as 'Price', b.quantity_owned as 'Quantity' from bonds b inner join (select g.id from groups g where g.participant_id='"+customerId+"' and g.group_type>0) o on b.group_id=o.id");
+		return connectionEngine.query("select b.bond_name as 'Bond Name', b.issuer_name as 'Issuer', (case when b.bond_type<1 then 'governmental' else 'corporate' end) as 'Type', b.cusip as 'CUSIP', b.rating as 'Rating', b.coupon_rate as 'Coupon Rate', b.current_yield as 'Current Yield', b.maturity_yield as 'Maturity Yield', b.maturity_date as 'Maturity Date', b.par_value as 'Par Value', b.price as 'Price', b.quantity_owned as 'Quantity' from bonds b inner join (select g.id from groups g where g.participant_id=? and g.group_type>0) o on b.group_id=o.id",customerId);
 	}
 	
 	public ResultSet getBondsForGivenSessionId(String sessionId) throws SQLException{
-		return connectionEngine.query("select b.bond_name as 'Bond Name', b.issuer_name as 'Issuer', (case when b.bond_type<1 then 'governmental' else 'corporate' end) as 'Type', b.cusip as 'CUSIP', b.rating as 'Rating', b.coupon_rate as 'Coupon Rate', b.current_yield as 'Current Yield', b.maturity_yield as 'Maturity Yield', b.maturity_date as 'Maturity Date', b.par_value as 'Par Value', b.price as 'Price', b.quantity_owned as 'Quantity' from bonds b inner join (select g.id from groups g inner join (select c.id,c.username from customers c inner join login_session l on c.username=l.username where l.session_id='"+sessionId+"') cus on g.participant_id=cus.id) o on b.group_id=o.id");
+		return connectionEngine.query("select b.bond_name as 'Bond Name', b.issuer_name as 'Issuer', (case when b.bond_type<1 then 'governmental' else 'corporate' end) as 'Type', b.cusip as 'CUSIP', b.rating as 'Rating', b.coupon_rate as 'Coupon Rate', b.current_yield as 'Current Yield', b.maturity_yield as 'Maturity Yield', b.maturity_date as 'Maturity Date', b.par_value as 'Par Value', b.price as 'Price', b.quantity_owned as 'Quantity' from bonds b inner join (select g.id from groups g inner join (select c.id,c.username from customers c inner join login_session l on c.username=l.username where l.session_id=?) cus on g.participant_id=cus.id) o on b.group_id=o.id",sessionId);
 	}
 	
 }

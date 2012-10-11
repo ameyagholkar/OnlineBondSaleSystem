@@ -28,9 +28,36 @@ public class ConnectionEngine{
 		statement.executeUpdate(query);
 	}
 	
+	public void update(String query, String... args) throws SQLException{
+		connection.setAutoCommit(false);
+		java.sql.PreparedStatement statement=connection.prepareStatement(query);
+		if(args.length>0){
+			for (int i = 0; i < args.length; i++) {
+				statement.setString(i+1, args[i]);
+
+			}
+		}
+		statement.executeUpdate(query);
+		connection.commit();
+	}
+	
 	public ResultSet query(String query) throws SQLException{
 		  resultSet = statement.executeQuery(query);
 		  return resultSet;
+	}
+	
+	public ResultSet query(String query, String... args) throws SQLException{
+		connection.setAutoCommit(false);
+		java.sql.PreparedStatement statement=connection.prepareStatement(query);
+		if(args.length>0){
+			for (int i = 0; i < args.length; i++) {
+				statement.setString(i+1, args[i]);
+
+			}
+		}
+		resultSet = statement.executeQuery(query);
+		connection.commit();
+		return resultSet;
 	}
 	
 	public void close() throws SQLException {
