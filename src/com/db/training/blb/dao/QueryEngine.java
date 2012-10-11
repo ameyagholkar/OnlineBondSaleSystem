@@ -121,7 +121,7 @@ public class QueryEngine {
 		if(!checkPortfolioManagementPermission(customerId, traderSessionId)){
 			throw new RuntimeException("You cannot manage this customer's portfolio.");
 		}
-		return connectionEngine.query("select b.bond_name as 'Bond Name', b.issuer_name as 'Issuer', (case when b.bond_type<1 then 'governmental' else 'corporate' end) as 'Type', b.cusip as 'CUSIP', b.rating as 'Rating', b.coupon_rate as 'Coupon Rate', b.current_yield as 'Current Yield', b.maturity_yield as 'Maturity Yield', b.maturity_date as 'Maturity Date', b.par_value as 'Par Value', b.price as 'Price', b.quantity_owned as 'Quantity' from bonds b inner join (select g.id from groups g where g.participant_id='"+customerId+"') o on b.group_id=o.id");
+		return connectionEngine.query("select b.bond_name as 'Bond Name', b.issuer_name as 'Issuer', (case when b.bond_type<1 then 'governmental' else 'corporate' end) as 'Type', b.cusip as 'CUSIP', b.rating as 'Rating', b.coupon_rate as 'Coupon Rate', b.current_yield as 'Current Yield', b.maturity_yield as 'Maturity Yield', b.maturity_date as 'Maturity Date', b.par_value as 'Par Value', b.price as 'Price', b.quantity_owned as 'Quantity' from bonds b inner join (select g.id from groups g where g.participant_id='"+customerId+"' and g.group_type>0) o on b.group_id=o.id");
 	}
 	
 	public ResultSet getBondsForGivenSessionId(String sessionId) throws SQLException{
