@@ -11,10 +11,11 @@
 <body>
 <div id='cssmenu'>
 <ul>
-   <li class='active '><a href='#'><span>Home</span></a></li>
-   <li><a href='#'><span>Products</span></a></li>
-   <li><a href='#'><span>Company</span></a></li>
-   <li><a href='#'><span>Contact</span></a></li>
+   <li class='active '><a href='index.jsp'><span>Home/Portfolio Management</span></a></li>
+   <%if(request.getParameter("customerId")!=null && (!request.getParameter("customerId").equalsIgnoreCase(""))){ %>
+   <li><a href='search_bonds.jsp?customerId=<%=request.getParameter("customerId")%>'><span>Buy</span></a></li>
+   <%} %>
+   <li><a href='logout.jsp'><span>Logout</span></a></li>
 </ul>
 </div>
 <%
