@@ -52,6 +52,7 @@ public class QueryEngine {
 			return false;
 		}else{
 			if(rs.getInt(1)==1){
+				recordLoginInfo(username);
 				return true;
 			}
 		}
@@ -75,8 +76,9 @@ public class QueryEngine {
 		return rs.getString(1);
 	}
 	
-	
-
+	public void recordLoginInfo(String username) throws SQLException{
+		connectionEngine.update("insert into log(login_date, username) values (timestamp(now()),?)", username);
+	}
 	
 	public ResultSet query(String query, String... args) throws SQLException{
 		return connectionEngine.query(query,args);
