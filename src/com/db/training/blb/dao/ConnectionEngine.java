@@ -65,4 +65,15 @@ public class ConnectionEngine{
 		connection.close();
 	}
 	
+	@Override
+	public void finalize(){
+		try {
+			resultSet.close();
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 }
