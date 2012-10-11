@@ -16,17 +16,22 @@
 </script>
 
 <script type="text/javascript">
-	function submitType(submitType) {
+	function submitType(submitType, customerId) {
 		if (submitType == 0)
-			document.userForm.action = "process_buy.jsp";
+			document.userForm.action = "process_buy.jsp?customerId=" + customerId;
 		else
 			{
 			
-			document.userForm.action = "buy.jsp";
+			document.userForm.action = "buy.jsp?customerId=" + customerId;
 			}
 	}
 </script>
-
+<% 
+// Redirect to index Page if the customer id is not set.
+if(request.getParameter("customerId")==null){
+	response.sendRedirect("index.jsp");
+}
+%>
 <title>Buy Bonds</title>
 </head>
 <body>
@@ -82,13 +87,13 @@
 			out.println("<form name ='userForm' method = 'POST'>");
 
 			out.println("<table><tr><td>Total purchase amount ($)</td><td id='amount'></td></tr></table>");
-			out.println("<input type='submit' value= 'Buy' onClick = 'submitType(0)'>");
+			out.println("<input type='submit' value= 'Buy' onClick = 'submitType(0, "+request.getParameter("customerId")+")'>");
 
 			out.println("<input type='hidden' name = 'coupon_rate_low' value = '"
 					+ criteria1 + "'>");
 			out.println("<input type='hidden' name = 'coupon_rate_high' value = '"
 					+ criteria2 + "'>");
-			out.println("<input type='submit' value= 'Return to Buy List' onClick = 'submitType(1)'>");
+			out.println("<input type='submit' value= 'Return to Buy List' onClick = 'submitType(1,"+request.getParameter("customerId")+")'>");
 			//out.println("<br><br><a href='buy.jsp'>Return to Buy Page</a>");
 
 			out.println("</form>");

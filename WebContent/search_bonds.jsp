@@ -21,9 +21,15 @@
 </script>
 </head>
 <body>
+<% 
+// Redirect to index Page if the customer id is not set.
+if(request.getParameter("customerId")==null){
+	response.sendRedirect("index.jsp");
+}
+%>
 <%@ include file="header.jsp" %>
 	<%
-		out.println("<form action='buy.jsp' method='POST' name='searchForm' onsubmit=' return validateForm()'>");
+		out.println("<form action='buy.jsp?customerId="+request.getParameter("customerId")+"' method='POST' name='searchForm' onsubmit=' return validateForm()'>");
 		out.println("<table cellpadding='10'>");
 		out.println("<tr><td><b>Coupon Rate</b></td><td>Low:&nbsp;<input type='text' name='coupon_rate_low' ></td><td>High:&nbsp;<input type='text' name='coupon_rate_high' ></td>");
 		// -- To add more criteria
