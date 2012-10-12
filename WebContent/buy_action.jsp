@@ -65,11 +65,6 @@ if(request.getParameter("customerId")==null){
 	<%
 		try {
 			String cusip = request.getParameter("cusip");
-			double criteria1 = Double.parseDouble(request
-					.getParameter("criteria1"));
-			double criteria2 = Double.parseDouble(request
-					.getParameter("criteria2"));
-			//	out.println(cusip);
 
 			ResultSet resultSet = new QueryEngine(new ConnectionEngine())
 					.getBondData(cusip);
@@ -98,28 +93,22 @@ if(request.getParameter("customerId")==null){
 
 			out.println("<p>Quantity Available  "
 					+ resultSet.getString("quantity_owned") + "</p>");
-			out.print("Please enter quantity to buy <input type='text' id='quantity'>");
-			out.println("<button value= 'Calculate' onclick='calculation("
-					+ price + ")'>Calculate</button>");
 
 			out.println("<form name ='userForm' method = 'POST'>");
+			out.print("Please enter quantity to buy <input type='text' name='quantity' id='quantity'>");
+			out.println("<button value= 'Calculate' onclick='calculation("
+					+ price + ")'>Calculate</button>");
 
 			out.println("<table><tr><td>Total purchase amount ($)</td><td id='amount'></td></tr></table>");
 			out.println("<input type='hidden' name = 'cusip' value = '"
 					+ cusip + "'>");
-			out.println("<input type='hidden' name = 'rating' value = '"
-					+ resultSet.getString("rating") + "'>");
-			out.println("<input type='hidden' name = 'price' value = '"
-					+ price + "'>");
+			out.println("<input type='hidden' name = 'rating' value = '"+ resultSet.getString("rating") + "'>");
+			out.println("<input type='hidden' name = 'price' value = '"+ price + "'>");
 			out.println("<input type='hidden' name = 'total_amount' id = 'total'>");
-		
 			
 			out.println("<input type='submit' value= 'Buy' onClick = 'submitType(0, "+request.getParameter("customerId")+")'>");
 
-			out.println("<input type='hidden' name = 'coupon_rate_low' value = '"
-					+ criteria1 + "'>");
-			out.println("<input type='hidden' name = 'coupon_rate_high' value = '"
-					+ criteria2 + "'>");
+
 			out.println("<input type='submit' value= 'Return to Buy List' onClick = 'submitType(1,"+request.getParameter("customerId")+")'>");
 			//out.println("<br><br><a href='buy.jsp'>Return to Buy Page</a>");
 
