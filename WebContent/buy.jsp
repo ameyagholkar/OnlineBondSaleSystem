@@ -104,8 +104,8 @@
 				}
 				out.println("</table>");
 
-				//out.println("<input type='hidden' name = 'criteria1' value = '"+ couponRateLow + "'>");
-				//out.println("<input type='hidden' name = 'criteria2' value = '"+ couponRateHigh + "'>");
+				out.println("<input type='hidden' name = 'criteria1' value = '"+ criteria.couponRateLow + "'>");
+				out.println("<input type='hidden' name = 'criteria2' value = '"+ criteria.couponRateHigh + "'>");
 				out.println("<input type='submit' value='Buy' /> </form>");
 			}
 		} catch (Exception e) {
