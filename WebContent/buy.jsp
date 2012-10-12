@@ -112,8 +112,20 @@
 				}
 				out.println("</table>");
 
-				out.println("<input type='hidden' name = 'criteria1' value = '"+ criteria.couponRateLow + "'>");
-				out.println("<input type='hidden' name = 'criteria2' value = '"+ criteria.couponRateHigh + "'>");
+				out.println("<input type='hidden' name = 'coupon_rate_low' value = '"+ request.getParameter("coupon_rate_low") + "'>");
+				out.println("<input type='hidden' name = 'coupon_rate_high' value = '"+ request.getParameter("coupon_rate_high") + "'>");
+				out.println("<input type='hidden' name = 'rating_low' value = '"+ request.getParameter("rating_low") + "'>");
+				out.println("<input type='hidden' name = 'rating_high' value = '"+ request.getParameter("rating_high") + "'>");
+				out.println("<input type='hidden' name = 'current_yield_low' value = '"+ request.getParameter("current_yield_low") + "'>");
+				out.println("<input type='hidden' name = 'current_yield_high' value = '"+ request.getParameter("current_yield_high") + "'>");
+				out.println("<input type='hidden' name = 'yield2maturity_low' value = '"+ request.getParameter("yield2maturity_low") + "'>");
+				out.println("<input type='hidden' name = 'yield2maturity_high' value = '"+ request.getParameter("yield2maturity_high") + "'>");
+				out.println("<input type='hidden' name = 'maturity_date_low' value = '"+ request.getParameter("maturity_date_low") + "'>");
+				out.println("<input type='hidden' name = 'maturity_date_high' value = '"+ request.getParameter("maturity_date_high") + "'>");
+				out.println("<input type='hidden' name = 'par_value_low' value = '"+ request.getParameter("par_value_low") + "'>");
+				out.println("<input type='hidden' name = 'par_value_high' value = '"+ request.getParameter("par_value_high") + "'>");
+				out.println("<input type='hidden' name = 'price_low' value = '"+ request.getParameter("price_low") + "'>");
+				out.println("<input type='hidden' name = 'price_high' value = '"+ request.getParameter("price_high") + "'>");
 				out.println("<input type='submit' value='Buy' /> </form>");
 			}
 		} catch (Exception e) {

@@ -16,16 +16,6 @@
 		document.getElementById("amount").innerHTML = amount;
 		//document.getElementById("total").value = amount;
 	}
-
-	function submitType(submitType, customerId) {
-		if (submitType == 0)
-			document.userForm.action = "process_buy.jsp?customerId=" + customerId;
-		else
-			{
-			
-			document.userForm.action = "buy.jsp?customerId=" + customerId;
-			}
-	}
 	
 	function returnTotal() {
 		var amount = document.getElementById("amount").value;
@@ -109,13 +99,29 @@ if(request.getParameter("customerId")==null){
 			out.println("<input type='hidden' name = 'cusip' value = '"+ cusip + "'>");
 			out.println("<input type='hidden' name = 'price' value = '"+ price + "'>");
 			
-			out.println("<input type='submit' value= 'Buy' onClick = 'submitType(0, "+request.getParameter("customerId")+")'>");
-
-
-			out.println("<input type='submit' value= 'Return to Buy List' onClick = 'submitType(1,"+request.getParameter("customerId")+")'>");
-			//out.println("<br><br><a href='buy.jsp'>Return to Buy Page</a>");
-
+			out.println("<input type='submit' value= 'Buy'>");
 			out.println("</form>");
+			
+			out.println("<form name ='userForm' method = 'POST' action='buy.jsp?customerId="+request.getParameter("customerId")+"'>");
+			out.println("<input type='hidden' name = 'coupon_rate_low' value = '"+ request.getParameter("coupon_rate_low") + "'>");
+			out.println("<input type='hidden' name = 'coupon_rate_high' value = '"+ request.getParameter("coupon_rate_high") + "'>");
+			out.println("<input type='hidden' name = 'rating_low' value = '"+ request.getParameter("rating_low") + "'>");
+			out.println("<input type='hidden' name = 'rating_high' value = '"+ request.getParameter("rating_high") + "'>");
+			out.println("<input type='hidden' name = 'current_yield_low' value = '"+ request.getParameter("current_yield_low") + "'>");
+			out.println("<input type='hidden' name = 'current_yield_high' value = '"+ request.getParameter("current_yield_high") + "'>");
+			out.println("<input type='hidden' name = 'yield2maturity_low' value = '"+ request.getParameter("yield2maturity_low") + "'>");
+			out.println("<input type='hidden' name = 'yield2maturity_high' value = '"+ request.getParameter("yield2maturity_high") + "'>");
+			out.println("<input type='hidden' name = 'maturity_date_low' value = '"+ request.getParameter("maturity_date_low") + "'>");
+			out.println("<input type='hidden' name = 'maturity_date_high' value = '"+ request.getParameter("maturity_date_high") + "'>");
+			out.println("<input type='hidden' name = 'par_value_low' value = '"+ request.getParameter("par_value_low") + "'>");
+			out.println("<input type='hidden' name = 'par_value_high' value = '"+ request.getParameter("par_value_high") + "'>");
+			out.println("<input type='hidden' name = 'price_low' value = '"+ request.getParameter("price_low") + "'>");
+			out.println("<input type='hidden' name = 'price_high' value = '"+ request.getParameter("price_high") + "'>");
+			out.println("<input type='submit' value= 'Return to Buy List'>");
+			//out.println("<br><br><a href='buy.jsp'>Return to Buy Page</a>");
+			out.println("</form>");
+
+
 
 		} catch (Exception e) {
 			// other unexpected exception, print error message to the console
