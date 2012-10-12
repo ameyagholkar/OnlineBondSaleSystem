@@ -5,4 +5,13 @@ padding:10px;
 border:1px solid gray;
 margin:10px;
 background-color: #dcdcdc;
-}
+};
+
+div.errors
+{
+width:250px;
+padding:10px;
+border:1px solid gray;
+margin:10px;
+background-color: #dcdcdc;
+};

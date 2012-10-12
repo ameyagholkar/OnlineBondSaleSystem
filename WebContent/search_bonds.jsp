@@ -6,6 +6,7 @@
 <head>
 <%@ include file="favicon.jsp"%>
 <link href="menu_assets/styles.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="common_styles.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Search Bonds</title>
 <script type="text/javascript">
@@ -18,6 +19,14 @@
 		}
 	}
 </script>
+<style>
+div.ex {
+	width: 500px;
+	padding: 10px;
+	border: 1px solid gray;
+	margin: 10px;
+}
+</style>
 </head>
 <body>
 	<%
@@ -27,22 +36,10 @@
 			return;
 		}
 	%>
-	<%
-		// Redirect to index Page if the customer id is not set.
-		if (request.getParameter("invalid") != null) {
-			if (request.getParameter("invalid").equals("1")) {
-				out.println("<h2>Cannot process order since the requested quantity of bond is not available.</h2>");
-			}
-			if (request.getParameter("invalid").equals("2")) {
-				out.println("<h2>Cannot process order since the customer does not have enough balance.</h2>");
-			}
-
-		}
-	%>
 	<%@ include file="header.jsp"%>
 	<div id='cssmenu'>
 		<ul>
-			<li ><a href='index.jsp'><span>Home/Portfolio
+			<li><a href='index.jsp'><span>Home/Portfolio
 						Management</span></a></li>
 			<%
 				if (request.getParameter("customerId") != null
@@ -55,21 +52,72 @@
 				}
 			%>
 			<li><a href='logout.jsp'><span>Logout</span></a></li>
-		</ul></div>
-			<form action='buy.jsp?customerId=<%=request.getQueryString().substring(request.getQueryString().indexOf("customerId=")+11) %>' 
-				method='POST' name='searchForm'>
-			<table cellpadding='10'>
-			<tr><td><b>Rating</b></td><td>Low:&nbsp;<input type='text' name='rating_low' ></td><td>High:&nbsp;<input type='text' name='rating_high' ></td></tr>
-			<tr><td><b>Coupon Rate (%)</b></td><td>Low:&nbsp;<input type='text' name='coupon_rate_low' ></td><td>High:&nbsp;<input type='text' name='coupon_rate_high' ></td></tr>
-			<tr><td><b>Current Yield (%)</b></td><td>Low:&nbsp;<input type='text' name='current_yield_low' ></td><td>High:&nbsp;<input type='text' name='current_yield_high' ></td></tr>
-			<tr><td><b>Yield to Maturity (%)</b></td><td>Low:&nbsp;<input type='text' name='yield2maturity_low' ></td><td>High:&nbsp;<input type='text' name='yield2maturity_high' ></td></tr>
-			<tr><td><b>Maturity Date</b></td><td>Low:&nbsp;<input type='text' name='maturity_date_low' ></td><td>High:&nbsp;<input type='text' name='maturity_date_high' ></td></tr>
-			<tr><td><b>Par Value ($)</b></td><td>Low:&nbsp;<input type='text' name='par_value_low' ></td><td>High:&nbsp;<input type='text' name='par_value_high' ></td></tr>
-			<tr><td><b>Price ($)</b></td><td>Low:&nbsp;<input type='text' name='price_low' ></td><td>High:&nbsp;<input type='text' name='price_high' ></td></tr>
-			</table>
-			<input type='hidden' name='searched' value='1' />
-			<input type='submit' value='Search' /> </form>
-			</form>
-	
+		</ul>
+	</div>
+	<%
+		if (request.getParameter("invalid") != null) {
+	%>
+	<div align="center" class="ex">
+		<%
+			// Redirect to index Page if the customer id is not set.
+
+				if (request.getParameter("invalid").equals("1")) {
+					out.println("Cannot process order since the requested quantity of bond is not available.");
+				}
+				if (request.getParameter("invalid").equals("2")) {
+					out.println("Cannot process order since the customer does not have enough balance.");
+				}
+		%>
+	</div>
+
+	<%
+		}
+	%>
+
+	<form
+		action='buy.jsp?customerId=<%=request.getQueryString().substring(
+					request.getQueryString().indexOf("customerId=") + 11)%>'
+		method='POST' name='searchForm'>
+		<table cellpadding='10'>
+			<tr>
+				<td><b>Rating</b></td>
+				<td>Low:&nbsp;<input type='text' name='rating_low'></td>
+				<td>High:&nbsp;<input type='text' name='rating_high'></td>
+			</tr>
+			<tr>
+				<td><b>Coupon Rate (%)</b></td>
+				<td>Low:&nbsp;<input type='text' name='coupon_rate_low'></td>
+				<td>High:&nbsp;<input type='text' name='coupon_rate_high'></td>
+			</tr>
+			<tr>
+				<td><b>Current Yield (%)</b></td>
+				<td>Low:&nbsp;<input type='text' name='current_yield_low'></td>
+				<td>High:&nbsp;<input type='text' name='current_yield_high'></td>
+			</tr>
+			<tr>
+				<td><b>Yield to Maturity (%)</b></td>
+				<td>Low:&nbsp;<input type='text' name='yield2maturity_low'></td>
+				<td>High:&nbsp;<input type='text' name='yield2maturity_high'></td>
+			</tr>
+			<tr>
+				<td><b>Maturity Date</b></td>
+				<td>Low:&nbsp;<input type='text' name='maturity_date_low'></td>
+				<td>High:&nbsp;<input type='text' name='maturity_date_high'></td>
+			</tr>
+			<tr>
+				<td><b>Par Value ($)</b></td>
+				<td>Low:&nbsp;<input type='text' name='par_value_low'></td>
+				<td>High:&nbsp;<input type='text' name='par_value_high'></td>
+			</tr>
+			<tr>
+				<td><b>Price ($)</b></td>
+				<td>Low:&nbsp;<input type='text' name='price_low'></td>
+				<td>High:&nbsp;<input type='text' name='price_high'></td>
+			</tr>
+		</table>
+		<input type='hidden' name='searched' value='1' /> <input
+			type='submit' value='Search' />
+	</form>
+
 </body>
 </html>
