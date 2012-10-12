@@ -127,7 +127,7 @@ if(request.getParameter("customerId")==null){
 
 		} catch (Exception e) {
 			// other unexpected exception, print error message to the console
-			out.println(e.toString());
+			e.printStackTrace();
 		}
 	%>
 
