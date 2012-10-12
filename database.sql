@@ -4,7 +4,8 @@ use blb;
 
 create table bonds(
 	cusip varchar(256) not null, /* eg MSFT */
-	rating integer, /*lowest is 0, highest 21*/
+	rating_snp integer, /*lowest is 0, highest 21*/
+	rating_moody integer, /*lowest is 0, highest 21*/
 	coupon_rate double not null,
 	current_yield double not null,
 	maturity_yield double not null,
@@ -96,10 +97,11 @@ insert into groups values (6, 1, 2);
 insert into groups values (7, 1, 4);
 insert into groups values (8, 1, 5);
 
-insert into bonds values ("0088a4567", 11, 10.00, 4.00, 3.50, '2018-7-04', 100, 123, 0, 10, "Microsoft", "Microsoft", 1),
-("0088a4573", 17, 10.00, 5.00, 3.50, '2018-2-04', 100, 103, 0, 10, "Google", "Google", 1),
-("0008a4527", 21, 11.00, 4.00, 3.50, '2015-7-14', 100, 146, 2, 20, "Gilt", "UK Government", 0),
-("0008a4527", 21, 11.00, 4.00, 3.50, '2015-7-14', 100, 145, 0, 30, "Gilt", "UK Government", 0);
+insert into bonds values ("0088a4567", 11,11, 10.00, 4.00, 3.50, '2018-7-04', 100, 123, 0, 10, "Microsoft", "Microsoft Corporation", 1),
+("0088a4573", 17,17, 10.00, 5.00, 3.50, '2018-2-04', 100, 103, 0, 10, "Google", "Google Inc.", 1),
+("0008a4527", 21,21, 11.00, 4.00, 3.50, '2015-7-14', 100, 146, 2, 20, "Gilt", "UK Government", 0),
+("0008a4527", 20,19, 15.00, 5.00, 3.50, '2017-7-14', 100, 125, 0, 50, "Apple", "Apple Inc.", 1),
+("0008a4527", 21,21, 11.00, 4.00, 3.50, '2015-7-14', 100, 145, 0, 30, "Gilt", "UK Government", 0);
 
 insert into bond_type values (0,'governmental'),(1,'corporate');
 

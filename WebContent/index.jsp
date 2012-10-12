@@ -17,107 +17,109 @@
 			<li class='active '><a href='index.jsp'><span>Home/Portfolio
 						Management</span></a></li>
 			<%
-				if (request.getParameter("customerId") != null
-						&& (!request.getParameter("customerId")
-								.equalsIgnoreCase(""))) {
+			if (request.getParameter("customerId") != null&& (!request.getParameter("customerId").equalsIgnoreCase(""))) {
 			%>
-			<li><a
-				href='search_bonds.jsp?customerId=<%=request.getParameter("customerId")%>'><span>Buy</span></a></li>
+				<li><a href='search_bonds.jsp?customerId=<%=request.getParameter("customerId")%>'><span>Buy</span></a></li>
 			<%
-				}
+			}
 			%>
 			<li><a href='logout.jsp'><span>Logout</span></a></li>
 		</ul>
 	</div>
 	<%
-		if (PortfolioModule.isTrader(request)
-				&& (request.getParameter("customerId") == null || request
-						.getParameter("customerId").equalsIgnoreCase(""))) {
-			ResultSet rs = PortfolioModule.getCustomers(request);
-			ResultSetMetaData metaData = rs.getMetaData();
-			if (rs.next()) {
-	%>
-	<br>
-	<table border=1 cellspacing=0 id="newspaper-b">
-		<tr>
-		<thead>
-			<%
-				for (int i = 2; i <= metaData.getColumnCount(); i++) {
-							out.write("<th>" + metaData.getColumnLabel(i) + "</th>");
-						}
+	if (PortfolioModule.isTrader(request)&& (request.getParameter("customerId") == null || request.getParameter("customerId").equalsIgnoreCase(""))) {
+		ResultSet rs = PortfolioModule.getCustomers(request);
+		ResultSetMetaData metaData = rs.getMetaData();
+		if (rs.next()) {
 			%>
-		</thead>
-		<tfoot>
+			<br>
+			<table border=1 cellspacing=0 id="newspaper-b">
 			<tr>
-				<td colspan="5"><em>Please choose a Customer by clicking on their name to continue.</em></td>
-			</tr>
-		</tfoot>
-		<tbody>
+			<thead>
 			<%
-				do {
-							out.write("<tr>");
-							for (int i = 2; i <= metaData.getColumnCount(); i++) {
-								if (i != 2) {
-									out.write("<td>" + rs.getString(i) + "</td>");
-								} else {
-									out.write("<td><a href=\"index.jsp?customerId="
-											+ rs.getString(1) + "\">"
-											+ rs.getString(i) + "</a></td>");
-								}
-							}
-							out.write("<tr>");
-						} while (rs.next());
+			for (int i = 2; i <= metaData.getColumnCount(); i++){
+				out.write("<th>" + metaData.getColumnLabel(i) + "</th>");
+			}
 			%>
-		</tbody>
-	</table>
-	<%
-		} else {
-	%><span style="color: #bb0000">No customers available.</span>
-	<%
-		}
-		} else {
+			</thead>
+			<tfoot>
+				<tr>
+					<td colspan="5"><em>Please choose a Customer by clicking on their name to continue.</em></td>
+				</tr>
+			</tfoot>
+			<tbody>
+			<%
+			do {
+						out.write("<tr>");
+						for (int i = 2; i <= metaData.getColumnCount(); i++) {
+							if (i != 2) {
+								out.write("<td>" + rs.getString(i) + "</td>");
+							} else {
+								out.write("<td><a href=\"index.jsp?customerId="
+										+ rs.getString(1) + "\">"
+										+ rs.getString(i) + "</a></td>");
+							}
+						}
+						out.write("<tr>");
+			} while (rs.next());
+			%>
+			</tbody>
+			</table>
+			<%
+			} else {
+				%><span style="color: #bb0000">No customers available.</span>
+				<%
+			}
+		}else{
 			ResultSet rs = PortfolioModule.getPortfolio(request);
 			ResultSetMetaData metaData = rs.getMetaData();
 			if (rs.next()) {
-	%>
-	<br>
-	<table border=1 cellpading=0 cellspacing=0 id="newspaper-b">
-		<tr>
-		<thead>
-			<%
+				%>
+				<br>
+				<table border=1 cellpading=0 cellspacing=0 id="newspaper-b">
+				<tr>
+				<thead>
+				<%
 				for (int i = 1; i <= metaData.getColumnCount(); i++) {
-							out.write("<th>" + metaData.getColumnLabel(i) + "</th>");
+					String s=metaData.getColumnLabel(i);
+					if(s.startsWith("Rating")){
+						out.write("<th>Rating</th>");i++;
+					}else{
+						out.write("<th>" + s + "</th>");
+					}
+				}
+				%>
+				</thead>
+				</tr>
+				<tbody>
+				<%
+				do{
+					out.write("<tr>");
+					for (int i = 1; i <= metaData.getColumnCount(); i++) {
+						if (metaData.getColumnLabel(i).equalsIgnoreCase(
+								"RatingSNP")) {
+							String snp = rs.getString(i);
+							String moody = rs.getString(i+1);
+							out.write("<td>"
+									+ SearchCriteria.getSnpRating(snp) + "/"
+									+ SearchCriteria.getMoodysRating(moody)
+									+ "</td>");
+							i++;
+						} else {
+							out.write("<td>" + rs.getString(i) + "</td>");
 						}
-			%>
-		</thead>
-		</tr>
-		<tbody>
+					}
+					out.write("<tr>");
+				} while (rs.next());
+				%>
+			</tbody>
+			</table>
 			<%
-				do {
-							out.write("<tr>");
-							for (int i = 1; i <= metaData.getColumnCount(); i++) {
-								if (metaData.getColumnLabel(i).equalsIgnoreCase(
-										"Rating")) {
-									String s = rs.getString(i);
-									out.write("<td>"
-											+ SearchCriteria.getSnpRating(s) + "/"
-											+ SearchCriteria.getMoodysRating(s)
-											+ "</td>");
-								} else {
-									out.write("<td>" + rs.getString(i) + "</td>");
-								}
-							}
-							out.write("<tr>");
-						} while (rs.next());
-			%>
-		</tbody>
-	</table>
-	<%
 		} else {
-	%><span style="color: #bb0000">No bonds in possession.</span>
-	<%
+			%><span style="color: #bb0000">No bonds in possession.</span>
+			<%
 		}
-		}
+	}
 	%>
 </body>
 </html>

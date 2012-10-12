@@ -21,7 +21,8 @@ public class BondModule {
 
 		ResultSet rs = queryEngine
 				.query("select * from blb.bonds "
-						+ "where rating between ? and ? "
+						+ "where (rating_snp between ? and ? "
+						+ "or rating_moody between ? and ?) "
 						+ "and coupon_rate between ? and ? "
 						+ "and current_yield between ? and ? "
 						+ "and maturity_yield between ? and ? "
@@ -29,18 +30,16 @@ public class BondModule {
 						+ "and par_value between ? and ? "
 						+ "and price between ? and ? "
 						+ "and group_id=0 and quantity_owned > 0",
-						new Integer(SearchCriteria
-								.getNumericRating(criteria.ratingLow))
-								.toString(),
-						new Integer(SearchCriteria
-								.getNumericRating(criteria.ratingHigh))
-								.toString(), criteria.couponRateLow,
-						criteria.couponRateHigh, criteria.currentYieldLow,
-						criteria.currentYieldHigh, criteria.yield2MaturityLow,
-						criteria.yield2MaturityHigh, criteria.maturityDateLow,
-						criteria.maturityDateHigh, criteria.parValueLow,
-						criteria.parValueHigh, criteria.priceLow,
-						criteria.priceHigh);
+						new Integer(SearchCriteria.getNumericRating(criteria.ratingLow)).toString(),
+						new Integer(SearchCriteria.getNumericRating(criteria.ratingHigh)).toString(),
+						new Integer(SearchCriteria.getNumericRating(criteria.ratingLow)).toString(),
+						new Integer(SearchCriteria.getNumericRating(criteria.ratingHigh)).toString(),
+						criteria.couponRateLow,criteria.couponRateHigh, 
+						criteria.currentYieldLow,criteria.currentYieldHigh, 
+						criteria.yield2MaturityLow,criteria.yield2MaturityHigh,
+						criteria.maturityDateLow,criteria.maturityDateHigh, 
+						criteria.parValueLow,criteria.parValueHigh,
+						criteria.priceLow,criteria.priceHigh);
 		if (!rs.next()) {
 			return null;
 		}
@@ -112,9 +111,10 @@ public class BondModule {
 			if (countOfUserBonds.getInt(1) == 0) {
 				queryEngine
 						.getConnectionEngine()
-						.update("insert into bonds values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+						.update("insert into bonds values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 								bondReq.getString("cusip"),
-								String.valueOf(bondReq.getInt("rating")),
+								String.valueOf(bondReq.getInt("rating_snp")),
+								String.valueOf(bondReq.getInt("rating_moody")),
 								String.valueOf(bondReq.getDouble("coupon_rate")),
 								String.valueOf(bondReq
 										.getDouble("current_yield")),

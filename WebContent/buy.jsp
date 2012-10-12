@@ -84,7 +84,7 @@
 							+ resultSet.getString("bond_name")
 							+ "</td><td>"
 							+ resultSet.getString("issuer_name")
-							+ "</td><td>" + SearchCriteria.getSnpRating(resultSet.getString("rating"))+"/"+SearchCriteria.getMoodysRating(resultSet.getString("rating"))
+							+ "</td><td>" + SearchCriteria.getSnpRating(resultSet.getString("rating_snp"))+"/"+SearchCriteria.getMoodysRating(resultSet.getString("rating_moody"))
 							+ "</td><td>"
 							+ resultSet.getString("coupon_rate")
 							+ "</td><td>"
@@ -109,8 +109,7 @@
 				out.println("<input type='submit' value='Buy' /> </form>");
 			}
 		} catch (Exception e) {
-			// other unexpected exception, print error message to the console
-			out.println(e.toString());
+			e.printStackTrace();
 		}
 		out.println("<a href='search_bonds.jsp?customerId="+request.getParameter("customerId")+"'>Return to Search Page</a>");
 		

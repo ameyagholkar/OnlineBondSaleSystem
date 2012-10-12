@@ -14,7 +14,7 @@
 		var quantity = document.getElementById("quantity").value;
 		var amount = quantity * price;
 		document.getElementById("amount").innerHTML = amount;
-		document.getElementById("total").value = amount;
+		//document.getElementById("total").value = amount;
 	}
 
 	function submitType(submitType, customerId) {
@@ -37,6 +37,7 @@
 // Redirect to index Page if the customer id is not set.
 if(request.getParameter("customerId")==null){
 	response.sendRedirect("index.jsp");
+	return;
 }
 %>
 <title>Buy Bonds</title>
@@ -45,16 +46,13 @@ if(request.getParameter("customerId")==null){
 	<%@ include file="header.jsp" %>
 	<div id='cssmenu'>
 		<ul>
-			<li><a href='index.jsp'><span>Home/Portfolio
-						Management</span></a></li>
+			<li><a href='index.jsp'><span>Home/Portfolio Management</span></a></li>
 			<%
-				if (request.getParameter("customerId") != null
-						&& (!request.getParameter("customerId")
-								.equalsIgnoreCase(""))) {
-			%>
-			<li class='active '><a
-				href='search_bonds.jsp?customerId=<%=request.getParameter("customerId")%>'><span>Buy</span></a></li>
-			<%
+				if (request.getParameter("customerId") != null && (!request.getParameter("customerId").equalsIgnoreCase(""))) {
+					%>
+					<li class='active '><a
+						href='search_bonds.jsp?customerId=<%=request.getParameter("customerId")%>'><span>Buy</span></a></li>
+					<%
 				}
 			%>
 			<li><a href='logout.jsp'><span>Logout</span></a></li>
@@ -66,8 +64,7 @@ if(request.getParameter("customerId")==null){
 		try {
 			String cusip = request.getParameter("cusip");
 
-			ResultSet resultSet = new QueryEngine(new ConnectionEngine())
-					.getBondData(cusip);
+			ResultSet resultSet = new QueryEngine(new ConnectionEngine()).getBondData(cusip);
 			if (resultSet == null) {
 				out.println("<h1>No Bonds found!</h1>");
 			}
@@ -80,7 +77,7 @@ if(request.getParameter("customerId")==null){
 			out.println("<tr><td>" + cusip + "</td> <td>"
 					+ resultSet.getString("bond_name") + "</td><td>"
 					+ resultSet.getString("issuer_name") + "</td><td>"
-					+ SearchCriteria.getSnpRating(resultSet.getString("rating")) + "/" + SearchCriteria.getMoodysRating(resultSet.getString("rating")) + "</td><td>"
+					+ SearchCriteria.getSnpRating(resultSet.getString("rating_snp")) + "/" + SearchCriteria.getMoodysRating(resultSet.getString("rating_moody")) + "</td><td>"
 					+ resultSet.getString("current_yield") + "</td><td>"
 					+ resultSet.getString("maturity_yield") + "</td><td>"
 					+ resultSet.getString("coupon_rate") + "</td><td>"
@@ -91,18 +88,15 @@ if(request.getParameter("customerId")==null){
 
 			out.println("<br>");
 
-			out.println("<p>Quantity Available  "
-					+ resultSet.getString("quantity_owned") + "</p>");
+			out.println("<p>Quantity Available  "+ resultSet.getString("quantity_owned") + "</p>");
+			out.println("<button value= 'Calculate' onclick='calculation("+ price + ")'>Calculate</button>");
 
 			out.println("<form name ='userForm' method = 'POST'>");
 			out.print("Please enter quantity to buy <input type='text' name='quantity' id='quantity'>");
-			out.println("<button value= 'Calculate' onclick='calculation("
-					+ price + ")'>Calculate</button>");
 
 			out.println("<table><tr><td>Total purchase amount ($)</td><td id='amount'></td></tr></table>");
-			out.println("<input type='hidden' name = 'cusip' value = '"
-					+ cusip + "'>");
-			out.println("<input type='hidden' name = 'rating' value = '"+ resultSet.getString("rating") + "'>");
+			out.println("<input type='hidden' name = 'cusip' value = '"+ cusip + "'>");
+			//out.println("<input type='hidden' name = 'rating' value = '"+ resultSet.getString("rating_snp") + "'>");
 			out.println("<input type='hidden' name = 'price' value = '"+ price + "'>");
 			out.println("<input type='hidden' name = 'total_amount' id = 'total'>");
 			
