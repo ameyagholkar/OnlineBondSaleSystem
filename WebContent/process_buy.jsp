@@ -58,7 +58,7 @@
 		BondModule bondModule = new BondModule();
 		//Call Process Order
 		if(totalPrice>0.0){
-			int status = bondModule.processBondOrder(cusip, numOfBonds, customerId, new Double(totalPrice).toString());
+			int status = bondModule.processBondOrder(cusip, numOfBonds, customerId, new Double(totalPrice).toString(), sessionId);
 			if( status == 1){
 				out.println("Done!");
 				response.sendRedirect("buy_confirmation.jsp?status=1&customerId=" + customerId);
