@@ -96,7 +96,7 @@ public class BondModule {
 						.getConnectionEngine()
 						.update("insert into bonds values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 								bondReq.getString("cusip"),
-								bondReq.getString("rating"),
+								String.valueOf(bondReq.getInt("rating")),
 								String.valueOf(bondReq.getDouble("coupon_rate")),
 								String.valueOf(bondReq
 										.getDouble("current_yield")),
@@ -106,7 +106,7 @@ public class BondModule {
 								String.valueOf(bondReq.getDouble("par_value")),
 								String.valueOf(bondReq.getDouble("price")),
 								String.valueOf(userGroupId), numOfBonds,
-								bondReq.getString(11), bondReq.getString(12),
+								bondReq.getString("bond_name"), bondReq.getString("issuer_name"),
 								String.valueOf(bondReq.getInt("bond_type")));
 			} else {
 				int userOwnedQuantity = countOfUserBonds.getInt(2);
