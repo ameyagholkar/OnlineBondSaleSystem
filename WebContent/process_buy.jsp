@@ -26,7 +26,6 @@
 	String cusip = request.getParameter("cusip");
 	String numOfBonds = request.getParameter("quantity");
 	String price=request.getParameter("price");
-	System.out.println(cusip+" "+numOfBonds+" "+price);
 	if(numOfBonds==null||numOfBonds.equalsIgnoreCase("")){
 		numOfBonds="0";
 	}
