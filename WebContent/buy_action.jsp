@@ -19,7 +19,7 @@
 
 	function submitType(submitType, customerId) {
 		if (submitType == 0)
-			document.userForm.action = "process_buy.jsp?customerId=" + customerId + "&quantity=" + document.getElementById("quantity").value;
+			document.userForm.action = "process_buy.jsp?customerId=" + customerId;
 		else
 			{
 			
@@ -89,16 +89,14 @@ if(request.getParameter("customerId")==null){
 			out.println("<br>");
 
 			out.println("<p>Quantity Available  "+ resultSet.getString("quantity_owned") + "</p>");
-			out.println("<button value= 'Calculate' onclick='calculation("+ price + ")'>Calculate</button>");
+			out.println("<button value= 'Calculate Total Price' onclick='calculation("+ price + ")'>Calculate Total Price</button>");
 
-			out.println("<form name ='userForm' method = 'POST'>");
+			out.println("<form name ='userForm' method = 'POST' action='process_buy.jsp?customerId="+request.getParameter("customerId")+"'>");
 			out.print("Please enter quantity to buy <input type='text' name='quantity' id='quantity'>");
 
 			out.println("<table><tr><td>Total purchase amount ($)</td><td id='amount'></td></tr></table>");
 			out.println("<input type='hidden' name = 'cusip' value = '"+ cusip + "'>");
-			//out.println("<input type='hidden' name = 'rating' value = '"+ resultSet.getString("rating_snp") + "'>");
 			out.println("<input type='hidden' name = 'price' value = '"+ price + "'>");
-			out.println("<input type='hidden' name = 'total_amount' id = 'total'>");
 			
 			out.println("<input type='submit' value= 'Buy' onClick = 'submitType(0, "+request.getParameter("customerId")+")'>");
 

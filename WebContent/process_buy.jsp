@@ -26,6 +26,7 @@
 	String cusip = request.getParameter("cusip");
 	String numOfBonds = request.getParameter("quantity");
 	String price=request.getParameter("price");
+	System.out.println(cusip+" "+numOfBonds+" "+price);
 	if(numOfBonds==null||numOfBonds.equalsIgnoreCase("")){
 		numOfBonds="0";
 	}
@@ -33,9 +34,6 @@
 		price="0.0";
 	}
 	double totalPrice = Integer.parseInt(numOfBonds)*Double.parseDouble(price);
-	
-	//DEBUG --
-	out.println(cusip + "  " + numOfBonds + "  " + totalPrice );
 
 	//Get the Cookie for Trader ID
 	Cookie[] cs = request.getCookies();
@@ -51,8 +49,7 @@
 	}
 	String customerId = request.getParameter("customerId");
 	//Check if Trader is authorized to make purchases
-	if (new QueryEngine(new ConnectionEngine())
-			.checkPortfolioManagementPermission(customerId, sessionId)) {
+	if (new QueryEngine(new ConnectionEngine()).checkPortfolioManagementPermission(customerId, sessionId)) {
 		out.println("Works!");		
 		// customer ID, Trader ID, Number of Bonds, Price, cusip, group id = 0
 		BondModule bondModule = new BondModule();
