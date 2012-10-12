@@ -2,6 +2,7 @@ package com.db.training.blb;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 import com.db.training.blb.dao.ConnectionEngine;
 import com.db.training.blb.dao.QueryEngine;
@@ -19,23 +20,27 @@ public class BondModule {
 		}
 
 		ResultSet rs = queryEngine
-				.query("select * from blb.bonds " +
-						"where rating between ? and ? " +
-						"and coupon_rate between ? and ? " +
-						"and current_yield between ? and ? " +
-						"and maturity_yield between ? and ? " +
-						"and timestamp(maturity_date) between timestamp(?) and timestamp(?) " +
-						"and par_value between ? and ? " +
-						"and price between ? and ? " +
-						"and group_id=0 and quantity_owned > 0",
-						new Integer(SearchCriteria.getNumericRating(criteria.ratingLow)).toString(), new Integer(SearchCriteria.getNumericRating(criteria.ratingHigh)).toString(),
-						criteria.couponRateLow,criteria.couponRateHigh,
-						criteria.currentYieldLow,criteria.currentYieldHigh,
-						criteria.yield2MaturityLow,criteria.yield2MaturityHigh,
-						criteria.maturityDateLow,criteria.maturityDateHigh,
-						criteria.parValueLow,criteria.parValueHigh,
-						criteria.priceLow, criteria.priceHigh
-					);
+				.query("select * from blb.bonds "
+						+ "where rating between ? and ? "
+						+ "and coupon_rate between ? and ? "
+						+ "and current_yield between ? and ? "
+						+ "and maturity_yield between ? and ? "
+						+ "and timestamp(maturity_date) between timestamp(?) and timestamp(?) "
+						+ "and par_value between ? and ? "
+						+ "and price between ? and ? "
+						+ "and group_id=0 and quantity_owned > 0",
+						new Integer(SearchCriteria
+								.getNumericRating(criteria.ratingLow))
+								.toString(),
+						new Integer(SearchCriteria
+								.getNumericRating(criteria.ratingHigh))
+								.toString(), criteria.couponRateLow,
+						criteria.couponRateHigh, criteria.currentYieldLow,
+						criteria.currentYieldHigh, criteria.yield2MaturityLow,
+						criteria.yield2MaturityHigh, criteria.maturityDateLow,
+						criteria.maturityDateHigh, criteria.parValueLow,
+						criteria.parValueHigh, criteria.priceLow,
+						criteria.priceHigh);
 		if (!rs.next()) {
 			return null;
 		}
@@ -43,7 +48,7 @@ public class BondModule {
 	}
 
 	public int processBondOrder(String cusip, String numOfBonds,
-			String customerId, String totalPrice) {
+			String customerId, String totalPrice, String sessionId) {
 		QueryEngine queryEngine = null;
 		;
 		try {
@@ -133,6 +138,14 @@ public class BondModule {
 
 			}
 			//Get Trader ID
+			int traderId = queryEngine.getTraderIdFromSessionId(sessionId);
+			// Get the current Date Time
+			java.util.Date dt = new java.util.Date();
+			java.text.SimpleDateFormat sdf = 
+			     new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String currentTime = sdf.format(dt);
+			String transactionUpdateQuery = "INSERT INTO transactions (buyer_id, seller_id, trader_id, transaction_date, bond_cusip, quantity, transaction_status) VALUES (?,?,?,?,?,?,?)";
+			queryEngine.getConnectionEngine().update(transactionUpdateQuery, customerId, String.valueOf(bondReq.getInt("group_id")), String.valueOf(traderId), currentTime, cusip, numOfBonds, "0" );
 			return 1;
 
 		} catch (Exception e) {

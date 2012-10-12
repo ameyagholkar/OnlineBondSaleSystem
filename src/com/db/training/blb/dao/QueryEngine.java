@@ -84,8 +84,13 @@ public class QueryEngine {
 		return connectionEngine.query(query,args);
 	}
 	
-	public ResultSet getTraderIdFromSessionId(String sessionId) throws SQLException {
-		return connectionEngine.query("select t.id from traders t join login_session s on t.username = s.username and s.session_id=?", sessionId);
+	public int getTraderIdFromSessionId(String sessionId) throws SQLException {
+		ResultSet rs = connectionEngine.query("select t.id as tid from traders t join login_session s on t.username = s.username and s.session_id=?", sessionId);
+		if(rs.next()){
+			return rs.getInt("tid");
+		}else {
+			throw new SQLException("No Records found.");
+		}
 	}
 	
 	public int getCustomerBalanceFromCustomerId(String customerId) throws SQLException {
