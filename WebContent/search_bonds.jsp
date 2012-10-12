@@ -25,6 +25,7 @@ div.ex {
 	padding: 10px;
 	border: 1px solid gray;
 	margin: 10px;
+	background-color: #F81B23;
 }
 </style>
 </head>
@@ -57,7 +58,9 @@ div.ex {
 	<%
 		if (request.getParameter("invalid") != null) {
 	%>
-	<div align="center" class="ex">
+	<div align="center" class="ex" id="errorMessage">
+		<table><tr><td><img src="images/Error.png" /></td>
+		<td><span style="font-family:Lucida Sans;font-weight:bold;">
 		<%
 			// Redirect to index Page if the customer id is not set.
 
@@ -68,6 +71,8 @@ div.ex {
 					out.println("Cannot process order since the customer does not have enough balance.");
 				}
 		%>
+		</span></td></tr>
+		</table>
 	</div>
 
 	<%
