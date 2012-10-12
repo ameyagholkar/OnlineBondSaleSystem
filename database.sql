@@ -15,6 +15,11 @@ create table bonds(
 	quantity_owned integer not null /* quantity owned by an owner_id customer */
 );
 
+create table bond_type(
+	id integer not null,
+	type_name varchar(256)
+);
+
 create table traders(
 id integer primary key,
 username varchar(64) not null,
@@ -95,6 +100,8 @@ insert into bonds values ("0088a4567", 11, 10.00, 4.00, 3.50, '2018-7-04', 100, 
 ("0088a4573", 17, 10.00, 5.00, 3.50, '2018-2-04', 100, 103, 0, 10, "Google", "Google", 1),
 ("0008a4527", 21, 11.00, 4.00, 3.50, '2015-7-14', 100, 146, 2, 20, "Gilt", "UK Government", 0),
 ("0008a4527", 21, 11.00, 4.00, 3.50, '2015-7-14', 100, 145, 0, 30, "Gilt", "UK Government", 0);
+
+insert into bond_type values (0,'governmental'),(1,'corporate');
 
 update blb.customers set password_hash=md5(password_hash);
 update blb.traders set password_hash=md5(password_hash);
