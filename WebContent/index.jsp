@@ -1,3 +1,4 @@
+<%@page import="com.db.training.blb.SearchCriteria"%>
 <%@page import="com.db.training.blb.PortfolioModule"%>
 <%@ include file="common.jsp" %>
 <%@ page import="java.sql.*" %>
@@ -74,7 +75,12 @@
 						do{
 							out.write("<tr>");
 							for(int i=1;i <= metaData.getColumnCount();i++){
-								out.write("<td>"+rs.getString(i)+"</td>");
+								if(metaData.getColumnLabel(i).equalsIgnoreCase("Rating")){
+									String s=rs.getString(i);
+									out.write("<td>"+SearchCriteria.getSnpRating(s)+"/"+SearchCriteria.getMoodysRating(s)+"</td>");
+								}else{
+									out.write("<td>"+rs.getString(i)+"</td>");
+								}
 							}
 							out.write("<tr>");
 						}while(rs.next());
