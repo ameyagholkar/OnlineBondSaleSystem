@@ -84,7 +84,7 @@
 							+ resultSet.getString("bond_name")
 							+ "</td><td>"
 							+ resultSet.getString("issuer_name")
-							+ "</td><td>" + resultSet.getString("rating")
+							+ "</td><td>" + SearchCriteria.getSnpRating(resultSet.getString("rating"))+"/"+SearchCriteria.getMoodysRating(resultSet.getString("rating"))
 							+ "</td><td>"
 							+ resultSet.getString("coupon_rate")
 							+ "</td><td>"

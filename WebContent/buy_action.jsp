@@ -1,3 +1,4 @@
+<%@page import="com.db.training.blb.SearchCriteria"%>
 <%@page import="com.db.training.blb.dao.ConnectionEngine"%>
 <%@page import="com.db.training.blb.dao.QueryEngine"%>
 <%@ include file="common.jsp"%>
@@ -84,7 +85,7 @@ if(request.getParameter("customerId")==null){
 			out.println("<tr><td>" + cusip + "</td> <td>"
 					+ resultSet.getString("bond_name") + "</td><td>"
 					+ resultSet.getString("issuer_name") + "</td><td>"
-					+ resultSet.getString("rating") + "</td><td>"
+					+ SearchCriteria.getSnpRating(resultSet.getString("rating")) + "/" + SearchCriteria.getMoodysRating(resultSet.getString("rating")) + "</td><td>"
 					+ resultSet.getString("current_yield") + "</td><td>"
 					+ resultSet.getString("maturity_yield") + "</td><td>"
 					+ resultSet.getString("coupon_rate") + "</td><td>"
