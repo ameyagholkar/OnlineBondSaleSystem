@@ -56,7 +56,7 @@
 			%>
 			<li><a href='logout.jsp'><span>Logout</span></a></li>
 		</ul></div>
-			<form action='buy.jsp?customerId=<%=request.getParameter("customerId") %>' 
+			<form action='buy.jsp?customerId=<%=request.getQueryString().substring(request.getQueryString().indexOf("customerId=")+11) %>' 
 				method='POST' name='searchForm' onsubmit=' return validateForm()'>
 			<table cellpadding='10'>
 			<tr><td><b>Rating</b></td><td>Low:&nbsp;<input type='text' name='rating_low' ></td><td>High:&nbsp;<input type='text' name='rating_high' ></td></tr>

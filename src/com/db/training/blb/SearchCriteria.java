@@ -2,9 +2,37 @@ package com.db.training.blb;
 
 public class SearchCriteria {
 
-
-	public String rating_low;
-	public String rating_high;
+	public String ratingLow;
+	public String ratingHigh;
+	public String couponRateLow;
+	public String couponRateHigh;
+	public String currentYieldLow;
+	public String currentYieldHigh;
+	public String yield2MaturityLow;
+	public String yield2MaturityHigh;
+	public String maturityDateLow;
+	public String maturityDateHigh;
+	public String parValueLow;
+	public String parValueHigh;
+	public String priceLow;
+	public String priceHigh;
+	
+	public void checkCriteria(){
+		if(ratingLow==null||ratingLow.equalsIgnoreCase("")){ratingLow="D";}
+		if(ratingHigh==null||ratingHigh.equalsIgnoreCase("")){ratingHigh="AAA";}
+		if(couponRateLow==null||couponRateLow.equalsIgnoreCase("")){couponRateLow="0";}
+		if(couponRateHigh==null||couponRateHigh.equalsIgnoreCase("")){couponRateHigh="100";}
+		if(currentYieldLow==null||currentYieldLow.equalsIgnoreCase("")){currentYieldLow="0";}
+		if(currentYieldHigh==null||currentYieldHigh.equalsIgnoreCase("")){currentYieldHigh="100";}
+		if(yield2MaturityLow==null||yield2MaturityLow.equalsIgnoreCase("")){yield2MaturityLow="0";}
+		if(yield2MaturityHigh==null||yield2MaturityHigh.equalsIgnoreCase("")){yield2MaturityHigh="100";}
+		if(maturityDateLow==null||maturityDateLow.equalsIgnoreCase("")){maturityDateLow="1900-01-01 00:00:00";}
+		if(maturityDateHigh==null||maturityDateHigh.equalsIgnoreCase("")){maturityDateHigh="2100-01-01 00:00";}
+		if(parValueLow==null||parValueLow.equalsIgnoreCase("")){parValueLow="0";}
+		if(parValueHigh==null||parValueHigh.equalsIgnoreCase("")){parValueHigh="1000000000";}
+		if(priceLow==null||priceLow.equalsIgnoreCase("")){priceLow="0";}
+		if(priceHigh==null||priceHigh.equalsIgnoreCase("")){priceHigh="1000000000";}
+	}
 
 	public static final String[] snpRating={
 		"D",
@@ -50,9 +78,9 @@ public class SearchCriteria {
 	 * @param rating
 	 * @return rating index, -1 otherwise
 	 */
-	public int getNumericRating(String rating){
+	public static int getNumericRating(String rating){
 		for (int i = 0; i < snpRating.length; i++) {
-			if(snpRating.equals(rating)||moodysRating.equals(rating)){
+			if(snpRating[i].equals(rating)||moodysRating[i].equals(rating)){
 				return i;
 			}
 		}

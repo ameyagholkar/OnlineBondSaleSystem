@@ -8,7 +8,7 @@ import com.db.training.blb.dao.QueryEngine;
 
 public class BondModule {
 
-	public ResultSet getListOfBonds(String couponRateLow, String couponRateHigh)
+	public ResultSet getListOfBonds(SearchCriteria criteria)
 			throws SQLException {
 		QueryEngine queryEngine = null;
 		try {
@@ -19,8 +19,24 @@ public class BondModule {
 		}
 
 		ResultSet rs = queryEngine
-				.query("select * from blb.bonds where coupon_rate between ? and ? and group_id=0 and quantity_owned > 0",
-						couponRateLow, couponRateHigh);
+				.query("select * from blb.bonds " +
+						"where rating between ? and ? " +
+						"and coupon_rate between ? and ? " +
+						"and current_yield between ? and ? " +
+						"and maturity_yield between ? and ? " +
+						"and timestamp(maturity_date) between timestamp(?) and timestamp(?) " +
+						"and par_value between ? and ? " +
+						"and price between ? and ? " +
+						"and group_id=0 and quantity_owned > 0",
+						new Integer(SearchCriteria.getNumericRating(criteria.ratingLow)).toString(), new Integer(SearchCriteria.getNumericRating(criteria.ratingHigh)).toString(),
+						criteria.couponRateLow,criteria.couponRateHigh,
+						criteria.currentYieldLow,criteria.currentYieldHigh,
+						criteria.yield2MaturityLow,criteria.yield2MaturityHigh,
+						criteria.maturityDateLow,criteria.maturityDateHigh,
+						criteria.parValueLow,criteria.parValueHigh,
+						criteria.priceLow, criteria.priceHigh
+					);
+		System.out.println(new Integer(SearchCriteria.getNumericRating(criteria.ratingLow)).toString()+" "+new Integer(SearchCriteria.getNumericRating(criteria.ratingHigh)).toString());
 		if (!rs.next()) {
 			return null;
 		}

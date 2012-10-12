@@ -1,4 +1,5 @@
 
+<%@page import="com.db.training.blb.SearchCriteria"%>
 <%@page import="com.db.training.blb.dao.ConnectionEngine"%>
 <%@page import="com.db.training.blb.dao.QueryEngine"%>
 <%@page import="com.db.training.blb.BondModule"%>
@@ -41,23 +42,25 @@
 		// DEBUG -- out.println(request.getParameter("coupon_rate_low"));
 		//DEBUG -- out.println(request.getParameter("coupon_rate_high"));
 
-		String couponRateLow;
-		String couponRateHigh;
-		if (request.getParameter("coupon_rate_low") == null) {
-			couponRateLow = "0";
-		}else{
-			couponRateLow = request.getParameter("coupon_rate_low");
-		}
+		SearchCriteria criteria=new SearchCriteria();
+		criteria.couponRateLow=request.getParameter("coupon_rate_low");
+		criteria.couponRateHigh=request.getParameter("coupon_rate_high");
+		criteria.ratingLow=request.getParameter("rating_low");
+		criteria.ratingHigh=request.getParameter("rating_high");
+		criteria.currentYieldLow=request.getParameter("current_yield_low");
+		criteria.currentYieldHigh=request.getParameter("current_yield_high");
+		criteria.yield2MaturityLow=request.getParameter("yield2maturity_low");
+		criteria.yield2MaturityHigh=request.getParameter("yield2maturity_high");
+		criteria.maturityDateLow=request.getParameter("maturity_date_low");
+		criteria.maturityDateHigh=request.getParameter("maturity_date_high");
+		criteria.parValueLow=request.getParameter("par_value_low");
+		criteria.parValueHigh=request.getParameter("par_value_high");
+		criteria.priceLow=request.getParameter("price_low");
+		criteria.priceHigh=request.getParameter("price_high");
+		criteria.checkCriteria();
 		
-		if (request.getParameter("coupon_rate_high") == null) {
-			couponRateHigh = "100";
-		}else{
-			couponRateHigh = request.getParameter("coupon_rate_high");;
-		}
-
 		try {
-			ResultSet resultSet = new BondModule().getListOfBonds(
-					couponRateLow, couponRateHigh);
+			ResultSet resultSet = new BondModule().getListOfBonds(criteria);
 
 			if (resultSet == null) {
 				out.println("<h1>No Bonds found!</h1>");
@@ -101,8 +104,8 @@
 				}
 				out.println("</table>");
 
-				out.println("<input type='hidden' name = 'criteria1' value = '"+ couponRateLow + "'>");
-				out.println("<input type='hidden' name = 'criteria2' value = '"+ couponRateHigh + "'>");
+				//out.println("<input type='hidden' name = 'criteria1' value = '"+ couponRateLow + "'>");
+				//out.println("<input type='hidden' name = 'criteria2' value = '"+ couponRateHigh + "'>");
 				out.println("<input type='submit' value='Buy' /> </form>");
 			}
 		} catch (Exception e) {
