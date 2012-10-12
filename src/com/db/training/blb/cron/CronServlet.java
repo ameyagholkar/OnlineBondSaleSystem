@@ -48,12 +48,12 @@ public class CronServlet extends HttpServlet {
 					QueryEngine queryEngine=new QueryEngine(new ConnectionEngine());
 					ResultSet rs=queryEngine.query("select id from blb.transactions where transaction_status=0 and timestampdiff(MINUTE,timestamp(transaction_date),timestamp(now()))>1");
 					while(rs.next()){
-						queryEngine.getConnectionEngine().update("update blb.transactions set transaction_status=1 where id=?", rs.getString(1));
+						queryEngine.getConnectionEngine().update("insert into blb.transactions(buyer_id,seller_id,trader_id,transaction_date,bond_cusip,quantity,transaction_status) values (select t.buyer_id,t.seller_id,t.trader_id,now(),t.bond_cusip,t.quantity,1 from blb.transactions t where id=?)", rs.getString(1));
 					}
 					rs.close();
 					rs=queryEngine.query("select id from blb.transactions where transaction_status=1 and timestampdiff(MINUTE,timestamp(transaction_date),timestamp(now()))>5");
 					while(rs.next()){
-						queryEngine.getConnectionEngine().update("update blb.transactions set transaction_status=2 where id=?", rs.getString(1));
+						queryEngine.getConnectionEngine().update("insert into blb.transactions(buyer_id,seller_id,trader_id,transaction_date,bond_cusip,quantity,transaction_status) values (select t.buyer_id,t.seller_id,t.trader_id,now(),t.bond_cusip,t.quantity,2 from blb.transactions t where id=?)", rs.getString(1));
 					}
 					rs.close();
 				} catch (Exception e) {
