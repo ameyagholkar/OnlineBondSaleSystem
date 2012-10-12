@@ -1,5 +1,6 @@
 <%@page import="com.db.training.blb.SearchCriteria"%>
 <%@page import="com.db.training.blb.PortfolioModule"%>
+<%@page import="com.db.training.blb.dao.*"%>
 <%@ include file="common.jsp"%>
 <%@ page import="java.sql.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -71,6 +72,14 @@
 				<%
 			}
 		}else{
+			if(request.getParameter("customerId")!=null&&(!request.getParameter("customerId").equalsIgnoreCase(""))){
+				ResultSet rs=new QueryEngine(new ConnectionEngine()).query(
+						"select full_name, balance from customers where id=?", 
+						request.getParameter("customerId"));
+				if(rs.next()){
+					out.println("<span style='font-family: arial;  font-size: 12pt; color:#888888'>Customer Name: "+rs.getString(1)+"; Available Balance: "+rs.getString(2)+"</span><br>");
+				}
+			}
 			ResultSet rs = PortfolioModule.getPortfolio(request);
 			ResultSetMetaData metaData = rs.getMetaData();
 			if (rs.next()) {
@@ -115,11 +124,11 @@
 			</tbody>
 			</table>
 			<%
-		} else {
-			%><span style="color: #bb0000">No bonds in possession.</span>
-			<%
+			} else {
+				%><span style="color: #bb0000">No bonds in possession.</span>
+				<%
+			}
 		}
-	}
 	%>
 </body>
 </html>
