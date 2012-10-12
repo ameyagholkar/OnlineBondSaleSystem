@@ -49,7 +49,7 @@ public class BondModule {
 	public int processBondOrder(String cusip, String numOfBonds,
 			String customerId, String totalPrice, String sessionId) {
 		QueryEngine queryEngine = null;
-		;
+		
 		try {
 			queryEngine = new QueryEngine(new ConnectionEngine());
 		} catch (ClassNotFoundException e) {
@@ -81,7 +81,7 @@ public class BondModule {
 			}
 			// If the Available quantity is greater than equal to the requested
 			// number - let the order go through
-			int availableQuantity = bondReq.getInt(10);
+			int availableQuantity = bondReq.getInt(11);
 			if (availableQuantity >= Integer.parseInt(numOfBonds)) {
 				availableQuantity = availableQuantity
 						- Integer.parseInt(numOfBonds); // Get the
