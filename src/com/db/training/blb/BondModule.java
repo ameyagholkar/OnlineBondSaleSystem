@@ -36,7 +36,6 @@ public class BondModule {
 						criteria.parValueLow,criteria.parValueHigh,
 						criteria.priceLow, criteria.priceHigh
 					);
-		System.out.println(new Integer(SearchCriteria.getNumericRating(criteria.ratingLow)).toString()+" "+new Integer(SearchCriteria.getNumericRating(criteria.ratingHigh)).toString());
 		if (!rs.next()) {
 			return null;
 		}
@@ -58,7 +57,6 @@ public class BondModule {
 		}
 
 		try {
-			System.out.println("CUSIP: " + cusip);
 			// Get the Customers Group ID
 			ResultSet userSet = queryEngine
 					.query("select g.id as group_id, c.balance as balance from customers c, groups g where g.group_type=1 and c.id=? and c.id = g.participant_id;",
@@ -88,7 +86,6 @@ public class BondModule {
 			} else {
 				return 2;
 			}
-			System.out.println("Quantity remaining: " + availableQuantity);
 			// Update Bonds table to reflect that the bonds are now processing -
 			// reduce the quantity
 			queryEngine
