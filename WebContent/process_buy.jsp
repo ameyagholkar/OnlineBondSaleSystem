@@ -20,11 +20,19 @@
 	// Redirect to index Page if the customer id is not set.		
 	if (request.getParameter("customerId") == null) {
 		response.sendRedirect("index.jsp");
+		return;
 	}
 	//Get the required data from the previous page
 	String cusip = request.getParameter("cusip");
 	String numOfBonds = request.getParameter("quantity");
-	String totalPrice = request.getParameter("total_amount");
+	String price=request.getParameter("price");
+	if(numOfBonds==null||numOfBonds.equalsIgnoreCase("")){
+		numOfBonds="0";
+	}
+	if(price==null||price.equalsIgnoreCase("")){
+		price="0.0";
+	}
+	double totalPrice = Integer.parseInt(numOfBonds)*Double.parseDouble(price);
 	
 	//DEBUG --
 	out.println(cusip + "  " + numOfBonds + "  " + totalPrice );
@@ -49,17 +57,26 @@
 		// customer ID, Trader ID, Number of Bonds, Price, cusip, group id = 0
 		BondModule bondModule = new BondModule();
 		//Call Process Order
-		int status = bondModule.processBondOrder(cusip, numOfBonds, customerId, totalPrice);
-		if( status == 1){
-			out.println("Done!");
-			response.sendRedirect("buy_confirmation.jsp?status=1&customerId=" + customerId);
-		}else if(status == 0){
-			out.println("Exceptions!");
-			response.sendRedirect("buy_confirmation.jsp?status=0&customerId=" + customerId);
-		}else if(status == 2){
+		if(totalPrice>0.0){
+			int status = bondModule.processBondOrder(cusip, numOfBonds, customerId, new Double(totalPrice).toString());
+			if( status == 1){
+				out.println("Done!");
+				response.sendRedirect("buy_confirmation.jsp?status=1&customerId=" + customerId);
+				return;
+			}else if(status == 0){
+				out.println("Exceptions!");
+				response.sendRedirect("buy_confirmation.jsp?status=0&customerId=" + customerId);
+				return;
+			}else if(status == 2){
+				response.sendRedirect("search_bonds.jsp?invalid=1&customerId=" + customerId);
+				return;
+			}else if(status == 3){
+				response.sendRedirect("search_bonds.jsp?invalid=2&customerId=" + customerId);
+				return;
+			}
+		}else{
 			response.sendRedirect("search_bonds.jsp?invalid=1&customerId=" + customerId);
-		}else if(status == 3){
-			response.sendRedirect("search_bonds.jsp?invalid=2&customerId=" + customerId);
+			return;
 		}
 	} else {
 		// TODO - Consult Team for Action to be taken here.
