@@ -44,7 +44,7 @@ create table groups(
 );
 
 create table transactions(
-	id integer primary key not null,
+	id integer primary key auto_increment not null,
 	buyer_id integer not null, /* group_id */
 	seller_id integer not null, /* group_id */
 	trader_id integer not null, /* id of the trader who executed transaction */
