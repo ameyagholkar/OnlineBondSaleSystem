@@ -48,16 +48,7 @@ if(request.getParameter("customerId")==null){
 			<li><a href='logout.jsp'><span>Logout</span></a></li>
 		</ul>
 	</div>
-	<%
-	if(request.getParameter("customerId")!=null&&(!request.getParameter("customerId").equalsIgnoreCase(""))){
-		ResultSet rs=new QueryEngine(new ConnectionEngine()).query(
-				"select full_name, balance from customers where id=?", 
-				request.getParameter("customerId"));
-		if(rs.next()){
-			out.println("<span style='font-family: arial;  font-size: 12pt; color:#888888'>Customer Name: "+rs.getString(1)+"; Available Balance: "+rs.getString(2)+"</span><br>");
-		}
-	}
-	%>
+<%@ include file="customer_name_balance_header.jsp"  %>
 	<h1>Buy Local Bonds: Purchase Order</h1>
 
 	<%

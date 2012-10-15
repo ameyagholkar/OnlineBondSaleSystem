@@ -118,7 +118,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td>Customer Balance</td>
+			<td>Customer Balance ($)</td>
 			<td>
 				<%
 					out.println(rs.getDouble("balance"));
