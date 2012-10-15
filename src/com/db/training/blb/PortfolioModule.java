@@ -45,7 +45,7 @@ public class PortfolioModule {
 	    }
 	    QueryEngine queryEngine=new QueryEngine(new ConnectionEngine());
 	    ResultSet resultSet=queryEngine.query(
-	    		"select c.id as 'Id', c.full_name as 'Name', c.balance as 'Balance', c.address as 'Address', c.phone as 'Phone', (select username from traders t1 where t1.id=c.trader_id) as 'Trader' from customers c inner join (select distinct participant_id from groups gg inner join (select g.id  from groups g inner join (select id from traders t inner join login_session l on t.username=l.username where l.session_id=?) t where g.participant_id=t.id and g.group_type<1) gid on gid.id=gg.id) trds on c.trader_id=trds.participant_id",sessionId
+	    		"select c.id as 'Id', c.full_name as 'Name', c.balance as 'Balance ($)', c.address as 'Address', c.phone as 'Phone', (select username from traders t1 where t1.id=c.trader_id) as 'Trader' from customers c inner join (select distinct participant_id from groups gg inner join (select g.id  from groups g inner join (select id from traders t inner join login_session l on t.username=l.username where l.session_id=?) t where g.participant_id=t.id and g.group_type<1) gid on gid.id=gg.id) trds on c.trader_id=trds.participant_id",sessionId
 	    		);
 		return resultSet;
 	}
