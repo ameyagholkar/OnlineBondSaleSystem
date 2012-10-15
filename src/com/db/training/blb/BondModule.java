@@ -191,7 +191,7 @@ public class BondModule {
 		return null;
 	}
 
-	public boolean cancelTransaction(String customerId, String transaction_id) throws SQLException{
+	public boolean cancelTransaction(String customerId, String transaction_id) {
 		QueryEngine queryEngine = null;
 
 		try {
@@ -204,28 +204,44 @@ public class BondModule {
 			e.printStackTrace();
 		}
 		// Get the Customers Group ID
-		ResultSet userSet = queryEngine
-				.query("select g.id as group_id, c.balance as balance from customers c, groups g where g.group_type=1 and c.id=? and c.id = g.participant_id;",
-						customerId);
+		ResultSet userSet;
+		try {
+			userSet = queryEngine
+					.query("select g.id as group_id, c.balance as balance from customers c, groups g where g.group_type=1 and c.id=? and c.id = g.participant_id;",
+							customerId);
 		userSet.first();
-		//cancel Transaction
-		queryEngine.getConnectionEngine().update("insert into transactions (buyer_id,seller_id,trader_id,transaction_date,bond_cusip,quantity,transaction_status) SELECT buyer_id,seller_id,trader_id,now(),bond_cusip,quantity,3 FROM transactions where id = ?", transaction_id);
-		//update quantity
-		ResultSet trnscData = queryEngine.query("select tr.bond_cusip as bond_cusip, tr.quantity as quantity from transactions tr where id = ?", transaction_id);
+		// cancel Transaction
+		queryEngine
+				.getConnectionEngine()
+				.update("insert into transactions (buyer_id,seller_id,trader_id,transaction_date,bond_cusip,quantity,transaction_status) SELECT buyer_id,seller_id,trader_id,now(),bond_cusip,quantity,3 FROM transactions where id = ?",
+						transaction_id);
+		// update quantity
+		ResultSet trnscData = queryEngine
+				.query("select tr.bond_cusip as bond_cusip, tr.quantity as quantity from transactions tr where id = ?",
+						transaction_id);
 		trnscData.first();
 		int quantity = trnscData.getInt("quantity");
-		ResultSet bondData = queryEngine.query("select distinct(b.price) as price from bonds b where cusip = ? and b.group_id=0", trnscData.getString("bond_cusip"));
+		ResultSet bondData = queryEngine
+				.query("select distinct(b.price) as price from bonds b where cusip = ? and b.group_id=0",
+						trnscData.getString("bond_cusip"));
 		bondData.first();
 		double priceToBeAdded = quantity * bondData.getDouble("price");
-		System.out.println("Price: " + priceToBeAdded + "Quantity: " + quantity);
-		//update balance and quantity
+		// update balance and quantity
 		String updateBalanceQuery = "update customers set balance=balance+? where id=?";
 		String updateQuantityQuery = "update bonds set quantity_owned=quantity_owned+? where cusip=? and group_id=0";
 		String updateCustomerQuantityQuery = "update bonds set quantity_owned=quantity_owned-? where cusip=? and group_id=?";
-		queryEngine.getConnectionEngine().update(updateBalanceQuery, String.valueOf(priceToBeAdded), customerId);
-		queryEngine.getConnectionEngine().update(updateQuantityQuery, String.valueOf(quantity), trnscData.getString("bond_cusip"));
-		queryEngine.getConnectionEngine().update(updateCustomerQuantityQuery, String.valueOf(quantity), trnscData.getString("bond_cusip"), String.valueOf(userSet.getInt("group_id")));
-		
+		queryEngine.getConnectionEngine().update(updateBalanceQuery,
+				String.valueOf(priceToBeAdded), customerId);
+		queryEngine.getConnectionEngine().update(updateQuantityQuery,
+				String.valueOf(quantity), trnscData.getString("bond_cusip"));
+		queryEngine.getConnectionEngine().update(updateCustomerQuantityQuery,
+				String.valueOf(quantity), trnscData.getString("bond_cusip"),
+				String.valueOf(userSet.getInt("group_id")));
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 		return true;
 	}
 }

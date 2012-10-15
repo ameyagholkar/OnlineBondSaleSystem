@@ -35,7 +35,7 @@
 	</div>
 	<%
 		// Redirect to index Page if the customer id is not set.
-		if (request.getParameter("customerId") == null || request.getParameter("transId") == null) {
+		if (request.getParameter("customerId") == null && request.getParameter("transId") == null) {
 			response.sendRedirect("index.jsp");
 			return;
 		}
@@ -44,8 +44,13 @@
 
 		BondModule b = new BondModule();
 		if (b.cancelTransaction(customerId, transactionId)) {
-			out.println("Cancellation is successful.");
+			response.sendRedirect("index.jsp?cancel=1&customerId="+customerId);
+			return;
+		}else {
+			out.println("Oops! Something has gone wrong! We are working on it!");
 		}
+		
+		
 	%>
 </body>
 </html>
