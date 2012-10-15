@@ -44,6 +44,8 @@
 		//DEBUG -- out.println(request.getParameter("coupon_rate_high"));
 
 		SearchCriteria criteria=new SearchCriteria();
+		criteria.name=request.getParameter("bond_name");
+		criteria.issuer=request.getParameter("bond_issuer");
 		criteria.couponRateLow=request.getParameter("coupon_rate_low");
 		criteria.couponRateHigh=request.getParameter("coupon_rate_high");
 		criteria.ratingLow=request.getParameter("rating_low");
@@ -104,7 +106,8 @@
 					i++;
 				}
 				out.println("</table>");
-
+				out.println("<input type='hidden' name = 'bond_name' value = '"+ request.getParameter("bond_name") + "'>");
+				out.println("<input type='hidden' name = 'bond_issuer' value = '"+ request.getParameter("bond_issuer") + "'>");
 				out.println("<input type='hidden' name = 'coupon_rate_low' value = '"+ request.getParameter("coupon_rate_low") + "'>");
 				out.println("<input type='hidden' name = 'coupon_rate_high' value = '"+ request.getParameter("coupon_rate_high") + "'>");
 				out.println("<input type='hidden' name = 'rating_low' value = '"+ request.getParameter("rating_low") + "'>");

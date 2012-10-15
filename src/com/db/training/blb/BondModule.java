@@ -20,7 +20,9 @@ public class BondModule {
 
 		ResultSet rs = queryEngine
 				.query("select * from blb.bonds "
-						+ "where (rating_snp between ? and ? "
+						+ "where " 
+						+ "bond_name like ? and issuer_name like ? and "
+						+ "(rating_snp between ? and ? "
 						+ "or rating_moody between ? and ?) "
 						+ "and coupon_rate between ? and ? "
 						+ "and current_yield between ? and ? "
@@ -29,6 +31,7 @@ public class BondModule {
 						+ "and par_value between ? and ? "
 						+ "and price between ? and ? "
 						+ "and group_id=0 and quantity_owned > 0",
+						criteria.name,criteria.issuer,
 						new Integer(SearchCriteria
 								.getNumericRating(criteria.ratingLow))
 								.toString(),

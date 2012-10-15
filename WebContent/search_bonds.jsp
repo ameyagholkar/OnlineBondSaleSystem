@@ -86,6 +86,14 @@ div.ex {
 		method='POST' name='searchForm'>
 		<table cellpadding='10'>
 			<tr>
+				<td><b>Name</b></td>
+				<td><input type='text' name='bond_name'></td>
+			</tr>
+			<tr>
+				<td><b>Issuer</b></td>
+				<td><input type='text' name='bond_issuer'></td>
+			</tr>
+			<tr>
 				<td><b>Rating</b></td>
 				<td>Low:&nbsp;<input type='text' name='rating_low'></td>
 				<td>High:&nbsp;<input type='text' name='rating_high'></td>

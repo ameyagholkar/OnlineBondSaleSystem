@@ -94,6 +94,8 @@ if(request.getParameter("customerId")==null){
 			out.println("</form>");
 			
 			out.println("<form name ='userForm' method = 'POST' action='buy.jsp?customerId="+request.getParameter("customerId")+"'>");
+			out.println("<input type='hidden' name = 'bond_name' value = '"+ request.getParameter("bond_name") + "'>");
+			out.println("<input type='hidden' name = 'bond_issuer' value = '"+ request.getParameter("bond_issuer") + "'>");
 			out.println("<input type='hidden' name = 'coupon_rate_low' value = '"+ request.getParameter("coupon_rate_low") + "'>");
 			out.println("<input type='hidden' name = 'coupon_rate_high' value = '"+ request.getParameter("coupon_rate_high") + "'>");
 			out.println("<input type='hidden' name = 'rating_low' value = '"+ request.getParameter("rating_low") + "'>");

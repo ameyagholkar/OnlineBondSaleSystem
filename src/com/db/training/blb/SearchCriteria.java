@@ -2,6 +2,8 @@ package com.db.training.blb;
 
 public class SearchCriteria {
 
+	public String name;
+	public String issuer;
 	public String ratingLow;
 	public String ratingHigh;
 	public String couponRateLow;
@@ -18,6 +20,8 @@ public class SearchCriteria {
 	public String priceHigh;
 	
 	public void checkCriteria(){
+		if(name==null||name.equalsIgnoreCase("")){name="%";}
+		if(issuer==null||issuer.equalsIgnoreCase("")){issuer="%";}
 		if(ratingLow==null||ratingLow.equalsIgnoreCase("")){ratingLow="D";}
 		if(ratingHigh==null||ratingHigh.equalsIgnoreCase("")){ratingHigh="AAA";}
 		if(couponRateLow==null||couponRateLow.equalsIgnoreCase("")){couponRateLow="0";}
@@ -32,6 +36,8 @@ public class SearchCriteria {
 		if(parValueHigh==null||parValueHigh.equalsIgnoreCase("")){parValueHigh="1000000000";}
 		if(priceLow==null||priceLow.equalsIgnoreCase("")){priceLow="0";}
 		if(priceHigh==null||priceHigh.equalsIgnoreCase("")){priceHigh="1000000000";}
+		name="%"+name+"%";
+		issuer="%"+issuer+"%";
 	}
 
 	public static final String[] snpRating={
