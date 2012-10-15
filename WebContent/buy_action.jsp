@@ -6,6 +6,7 @@
 <html>
 <head>
 <%@ include file="favicon.jsp"%>
+<link href="common_styles.css" rel="stylesheet" type="text/css">
 <link href="menu_assets/styles.css" rel="stylesheet" type="text/css">
 <link href="table_assets/style.css" rel="stylesheet" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -81,7 +82,7 @@ if(request.getParameter("customerId")==null){
 			out.println("<br>");
 
 			out.println("<p>Quantity Available  "+ resultSet.getString("quantity_owned") + "</p>");
-			out.println("<button value= 'Calculate Total Price' onclick='calculation("+ price + ")'>Calculate Total Price</button>");
+			out.println("<input type='Submit' value= 'Calculate Total Price' onclick='calculation("+ price + ")'/>");
 
 			out.println("<form name ='userForm' method = 'POST' action='process_buy.jsp?customerId="+request.getParameter("customerId")+"'>");
 			out.print("Please enter quantity to buy <input type='text' name='quantity' id='quantity'>");

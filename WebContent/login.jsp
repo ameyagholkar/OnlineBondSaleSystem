@@ -56,7 +56,7 @@
 					out.write("<span style='color: #cc0000'>Invalid Username or Password</span><br>");
 				}
 			%><input type="submit" value="Sign In"
-				style="width: 118px; height: 28px">
+				>
 		</form>
 	</div>
 </body>

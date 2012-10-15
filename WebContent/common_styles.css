@@ -1,17 +1,43 @@
-div.loginBlock
-{
-width:250px;
-padding:10px;
-border:1px solid gray;
-margin:10px;
-background-color: #dcdcdc;
-};
+div.loginBlock {
+	width: 250px;
+	padding: 10px;
+	border: 1px solid gray;
+	margin: 10px;
+	background-color: #dcdcdc;
+}
 
-div.errors
-{
-width:250px;
-padding:10px;
-border:1px solid gray;
-margin:10px;
-background-color: #dcdcdc;
-};
+
+div.errors {
+	width: 250px;
+	padding: 10px;
+	border: 1px solid gray;
+	margin: 10px;
+	background-color: #dcdcdc;
+}
+
+
+#customer {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	width: 250px;
+	padding: 10px;
+	border: 1px solid gray;
+	margin: 45px;
+	background-color: #dcdcdc;
+}
+
+body {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+}
+
+input {
+    border:2px solid #dadada;
+    border-radius:7px;
+    font-size:20px;
+    padding:5px; 
+}
+
+input:focus { 
+    outline:none;
+    border-color:#9ecaed;
+    box-shadow:0 0 10px #9ecaed;
+}

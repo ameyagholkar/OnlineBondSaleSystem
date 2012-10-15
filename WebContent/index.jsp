@@ -7,6 +7,7 @@
 <html>
 <head>
 <%@ include file="favicon.jsp"%>
+<link href="common_styles.css" rel="stylesheet" type="text/css">
 <link href="menu_assets/styles.css" rel="stylesheet" type="text/css">
 <link href="table_assets/style.css" rel="stylesheet" type="text/css">
 <title>Online Wholesaler</title>

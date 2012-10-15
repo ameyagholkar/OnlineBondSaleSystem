@@ -5,8 +5,9 @@
 <html>
 <head>
 <%@ include file="favicon.jsp"%>
+<link href="common_styles.css" rel="stylesheet" type="text/css">
 <link href="menu_assets/styles.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="common_styles.css" />
+<link href="table_assets/style.css" rel="stylesheet" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Search Bonds</title>
 <script type="text/javascript">
@@ -55,24 +56,27 @@ div.ex {
 			<li><a href='logout.jsp'><span>Logout</span></a></li>
 		</ul>
 	</div>
-	<%@ include file="customer_name_balance_header.jsp"  %>
+	<%@ include file="customer_name_balance_header.jsp"%>
 	<%
 		if (request.getParameter("invalid") != null) {
 	%>
 	<div align="center" class="ex" id="errorMessage">
-		<table><tr><td><img src="images/Error.png" /></td>
-		<td><span style="font-family:Lucida Sans;font-weight:bold;">
-		<%
-			// Redirect to index Page if the customer id is not set.
+		<table>
+			<tr>
+				<td><img src="images/Error.png" /></td>
+				<td><span style="font-family: Lucida Sans; font-weight: bold;">
+						<%
+							// Redirect to index Page if the customer id is not set.
 
-				if (request.getParameter("invalid").equals("1")) {
-					out.println("Cannot process order since the requested quantity of bond is not available.");
-				}
-				if (request.getParameter("invalid").equals("2")) {
-					out.println("Cannot process order since the customer does not have enough balance.");
-				}
-		%>
-		</span></td></tr>
+								if (request.getParameter("invalid").equals("1")) {
+									out.println("Cannot process order since the requested quantity of bond is not available.");
+								}
+								if (request.getParameter("invalid").equals("2")) {
+									out.println("Cannot process order since the customer does not have enough balance.");
+								}
+						%>
+				</span></td>
+			</tr>
 		</table>
 	</div>
 
@@ -84,50 +88,74 @@ div.ex {
 		action='buy.jsp?customerId=<%=request.getQueryString().substring(
 					request.getQueryString().indexOf("customerId=") + 11)%>'
 		method='POST' name='searchForm'>
-		<table cellpadding='10'>
+		<table cellpadding='10' id='newspaper-b'>
 			<tr>
-				<td><b>Name</b></td>
-				<td><input type='text' name='bond_name'></td>
+				<th><b>Name</b></th>
+				<td colspan=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+					type='text' name='bond_name' title="Enter the Name of Bond here."></td>
 			</tr>
 			<tr>
-				<td><b>Issuer</b></td>
-				<td><input type='text' name='bond_issuer'></td>
+				<th><b>Issuer</b></th>
+				<td colspan=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+					type='text' name='bond_issuer' title="Enter the Issuer Name here."></td>
 			</tr>
 			<tr>
-				<td><b>Rating</b></td>
-				<td>Low:&nbsp;<input type='text' name='rating_low'></td>
-				<td>High:&nbsp;<input type='text' name='rating_high'></td>
+				<th><b>Rating</b></th>
+				<td>Low:&nbsp;<input type='text' name='rating_low'
+					title="Enter Minimum Rating here. E.g. (D/BB)"></td>
+				<td>High:&nbsp;<input type='text' name='rating_high'
+					title="Enter Maximum Rating here. E.g. (AAA/Aaa)"></td>
 			</tr>
 			<tr>
-				<td><b>Coupon Rate (%)</b></td>
-				<td>Low:&nbsp;<input type='text' name='coupon_rate_low'></td>
-				<td>High:&nbsp;<input type='text' name='coupon_rate_high'></td>
+				<th><b>Coupon Rate (%)</b></th>
+				<td>Low:&nbsp;<input type='text' name='coupon_rate_low'
+					title="Enter Minimum Coupon Rate. E.g. (3.5)"></td>
+				<td>High:&nbsp;<input type='text' name='coupon_rate_high'
+					title="Enter Maximum Coupon Rate. E.g. (10.2)"></td>
 			</tr>
 			<tr>
-				<td><b>Current Yield (%)</b></td>
-				<td>Low:&nbsp;<input type='text' name='current_yield_low'></td>
-				<td>High:&nbsp;<input type='text' name='current_yield_high'></td>
+				<th><b>Current Yield (%)</b></th>
+				<td>Low:&nbsp;<input type='text' name='current_yield_low'
+					title="Enter Minimum Current Yeild here. E.g. (3.5)"></td>
+				<td>High:&nbsp;<input type='text' name='current_yield_high'
+					title="Enter Maximum Current Yeild here. E.g. (10.2)"></td>
 			</tr>
 			<tr>
-				<td><b>Yield to Maturity (%)</b></td>
-				<td>Low:&nbsp;<input type='text' name='yield2maturity_low'></td>
-				<td>High:&nbsp;<input type='text' name='yield2maturity_high'></td>
+				<th><b>Yield to Maturity (%)</b></th>
+				<td>Low:&nbsp;<input type='text' name='yield2maturity_low'
+					title="Enter Minimum Yeild to Maturity here. E.g. (3.5)"></td>
+				<td>High:&nbsp;<input type='text' name='yield2maturity_high'
+					title="Enter Maximum Yeild to Maturity here. E.g. (10.2)"></td>
 			</tr>
 			<tr>
-				<td><b>Maturity Date</b></td>
-				<td>Low:&nbsp;<input type='text' name='maturity_date_low'></td>
-				<td>High:&nbsp;<input type='text' name='maturity_date_high'></td>
+				<th><b>Maturity Date</b></th>
+				<td>Low:&nbsp;<input type='text' name='maturity_date_low'
+					title="Enter Minimum Maturity Date here. E.g. (YYYY-MM-DD)"></td>
+				<td>High:&nbsp;<input type='text' name='maturity_date_high'
+					title="Enter Maximum Maturity Date here. E.g. (YYYY-MM-DD)"></td>
 			</tr>
 			<tr>
-				<td><b>Par Value ($)</b></td>
-				<td>Low:&nbsp;<input type='text' name='par_value_low'></td>
-				<td>High:&nbsp;<input type='text' name='par_value_high'></td>
+				<th><b>Par Value ($)</b></th>
+				<td>Low:&nbsp;<input type='text' name='par_value_low'
+					title="Enter Minimum Par Value here. E.g. (50)"></td>
+				<td>High:&nbsp;<input type='text' name='par_value_high'
+					title="Enter Maximum Par Value here. E.g. (500)"></td>
 			</tr>
 			<tr>
-				<td><b>Price ($)</b></td>
-				<td>Low:&nbsp;<input type='text' name='price_low'></td>
-				<td>High:&nbsp;<input type='text' name='price_high'></td>
+				<th><b>Price ($)</b></th>
+				<td>Low:&nbsp;<input type='text' name='price_low'
+					title="Enter Minimum Price here. E.g. (300)"></td>
+				<td>High:&nbsp;<input type='text' name='price_high'
+					title="Enter Maximum Price here. E.g. (900)"></td>
 			</tr>
+			<tfoot>
+				<tr>
+					<td colspan=3><em>Enter the Search Criteria to search the market for Bonds.
+						Move your mouse over the fields for additional help. If search is
+						initiated without any criteria, all available bonds will be
+						displayed.</em></td>
+				</tr>
+			</tfoot>
 		</table>
 		<input type='hidden' name='searched' value='1' /> <input
 			type='submit' value='Search' />

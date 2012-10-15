@@ -8,6 +8,7 @@
 <html>
 <head>
 <%@ include file="favicon.jsp"%>
+<link href="common_styles.css" rel="stylesheet" type="text/css">
 <link href="menu_assets/styles.css" rel="stylesheet" type="text/css">
 <link href="table_assets/style.css" rel="stylesheet" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -38,7 +39,7 @@
 		}
 	%>
 	<%@ include file="customer_name_balance_header.jsp"  %>
-	<h1>Bonds Available</h1>
+	<h3 style='margin:45px;'>Bonds Available</h3>
 	<%
 		// DEBUG -- out.println(request.getParameter("coupon_rate_low"));
 		//DEBUG -- out.println(request.getParameter("coupon_rate_high"));
