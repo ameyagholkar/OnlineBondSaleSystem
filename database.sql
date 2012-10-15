@@ -52,7 +52,8 @@ create table transactions(
 	transaction_date datetime not null, /* curdate() */
 	bond_cusip varchar(256) not null,
 	quantity integer not null,
-	transaction_status integer not null /* 0 - initiated, 1 - pending, 2 - completed, 3 - cancelled */
+	transaction_status integer not null, /* 0 - initiated, 1 - pending, 2 - completed, 3 - cancelled */
+	processed integer default 0 /* 0 - not processed, 1 - processed */
 ) auto_increment=1;
 
 create table log (

@@ -218,6 +218,7 @@ public class BondModule {
 				.getConnectionEngine()
 				.update("insert into transactions (buyer_id,seller_id,trader_id,transaction_date,bond_cusip,quantity,transaction_status) SELECT buyer_id,seller_id,trader_id,now(),bond_cusip,quantity,3 FROM transactions where id = ?",
 						transaction_id);
+		queryEngine.getConnectionEngine().update("update blb.transactions set processed=1 where id=?",transaction_id);
 		// update quantity
 		ResultSet trnscData = queryEngine
 				.query("select tr.bond_cusip as bond_cusip, tr.quantity as quantity from transactions tr where id = ?",
