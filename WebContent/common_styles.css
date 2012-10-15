@@ -32,7 +32,8 @@ body {
 input {
     border:2px solid #dadada;
     border-radius:7px;
-    font-size:20px;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-size:12px;
     padding:5px; 
 }
 

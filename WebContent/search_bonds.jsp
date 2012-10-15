@@ -148,17 +148,21 @@ div.ex {
 				<td>High:&nbsp;<input type='text' name='price_high'
 					title="Enter Maximum Price here. E.g. (900)"></td>
 			</tr>
+			<tr>
+				<td colspan=3 align="center"><input type='hidden'
+					name='searched' value='1' /> <input type='submit' value='Search'
+					style='margin-left: 45px; font-size: 25px; width: 200px;' /></td>
+			</tr>
 			<tfoot>
 				<tr>
-					<td colspan=3><em>Enter the Search Criteria to search the market for Bonds.
-						Move your mouse over the fields for additional help. If search is
-						initiated without any criteria, all available bonds will be
-						displayed.</em></td>
+					<td colspan=3><em>Enter the Search Criteria to search the
+							market for Bonds. Move your mouse over the fields for additional
+							help. If search is initiated without any criteria, all available
+							bonds will be displayed.</em></td>
 				</tr>
 			</tfoot>
 		</table>
-		<input type='hidden' name='searched' value='1' /> <input
-			type='submit' value='Search' />
+
 	</form>
 
 </body>

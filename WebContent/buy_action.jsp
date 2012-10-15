@@ -91,7 +91,7 @@ if(request.getParameter("customerId")==null){
 			out.println("<input type='hidden' name = 'cusip' value = '"+ cusip + "'>");
 			out.println("<input type='hidden' name = 'price' value = '"+ price + "'>");
 			
-			out.println("<input type='submit' value= 'Buy'>");
+			out.println("<input type='submit' style='margin-left: 45px; font-size: 15px; width: 200px;' value= 'Buy'>");
 			out.println("</form>");
 			
 			out.println("<form name ='userForm' method = 'POST' action='buy.jsp?customerId="+request.getParameter("customerId")+"'>");
@@ -111,7 +111,7 @@ if(request.getParameter("customerId")==null){
 			out.println("<input type='hidden' name = 'par_value_high' value = '"+ request.getParameter("par_value_high") + "'>");
 			out.println("<input type='hidden' name = 'price_low' value = '"+ request.getParameter("price_low") + "'>");
 			out.println("<input type='hidden' name = 'price_high' value = '"+ request.getParameter("price_high") + "'>");
-			out.println("<input type='submit' value= 'Return to Buy List'>");
+			out.println("<input type='submit' style='margin-left: 45px; font-size: 15px; width: 200px;' value= 'Return to Buy List'>");
 			//out.println("<br><br><a href='buy.jsp'>Return to Buy Page</a>");
 			out.println("</form>");
 

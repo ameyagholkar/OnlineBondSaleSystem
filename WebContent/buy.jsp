@@ -102,10 +102,15 @@
 							+ "</td><td>" + resultSet.getString("price")
 							+ "</td><td>"
 							+ resultSet.getString("quantity_owned"));
-					out.println("</tr>");
+					out.println("</tr>"); 
 					resultSet.next();
 					i++;
 				}
+				%>
+					<tr><td colspan=12 align='center'><input type='submit'  style='margin-left: 45px; font-size: 25px; width: 200px;' value='Buy' /> or 
+					<a href='search_bonds.jsp?customerId=<%= request.getParameter("customerId") %>' style='font-size: 15px;'>Return to Search Page</a>
+					</td></tr> 
+				<%
 				out.println("</table>");
 				out.println("<input type='hidden' name = 'bond_name' value = '"+ request.getParameter("bond_name") + "'>");
 				out.println("<input type='hidden' name = 'bond_issuer' value = '"+ request.getParameter("bond_issuer") + "'>");
@@ -123,12 +128,12 @@
 				out.println("<input type='hidden' name = 'par_value_high' value = '"+ request.getParameter("par_value_high") + "'>");
 				out.println("<input type='hidden' name = 'price_low' value = '"+ request.getParameter("price_low") + "'>");
 				out.println("<input type='hidden' name = 'price_high' value = '"+ request.getParameter("price_high") + "'>");
-				out.println("<input type='submit' value='Buy' /> </form>");
+				out.println("</form>");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		out.println("<a href='search_bonds.jsp?customerId="+request.getParameter("customerId")+"'>Return to Search Page</a>");
+		out.println("");
 		
 
 	%>
