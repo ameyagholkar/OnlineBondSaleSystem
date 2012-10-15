@@ -1,6 +1,7 @@
 <%@page import="com.db.training.blb.BondModule"%>
 <%@page import="com.db.training.blb.dao.ConnectionEngine"%>
 <%@page import="com.db.training.blb.dao.QueryEngine"%>
+<%@page import="com.db.training.blb.objects.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ include file="common.jsp"%>
@@ -48,30 +49,38 @@
 	}
 	String customerId = request.getParameter("customerId");
 	//Check if Trader is authorized to make purchases
-	if (new QueryEngine(new ConnectionEngine()).checkPortfolioManagementPermission(customerId, sessionId)) {
-		out.println("Works!");		
+	if (new QueryEngine(new ConnectionEngine())
+			.checkPortfolioManagementPermission(customerId, sessionId)) {
+		out.println("Works!");
 		// customer ID, Trader ID, Number of Bonds, Price, cusip, group id = 0
 		BondModule bondModule = new BondModule();
 		//Call Process Order
-		if(totalPrice>0.0){
-			int status = bondModule.processBondOrder(cusip, numOfBonds, customerId, new Double(totalPrice).toString(), sessionId);
-			if( status == 1){
+		if (totalPrice > 0.0) {
+			ConfirmationData orderStatus = bondModule.processBondOrder(cusip, numOfBonds,
+					customerId, new Double(totalPrice).toString(),
+					sessionId);
+			if (orderStatus.getStatus() == 1) {
 				out.println("Done!");
-				response.sendRedirect("buy_confirmation.jsp?status=1&customerId=" + customerId);
+				response.sendRedirect("buy_confirmation.jsp?status=1&customerId="
+						+ customerId + "&date=" + orderStatus.getProcessingTime());
 				return;
-			}else if(status == 0){
+			} else if (orderStatus.getStatus()  == 0) {
 				out.println("Exceptions!");
-				response.sendRedirect("buy_confirmation.jsp?status=0&customerId=" + customerId);
+				response.sendRedirect("buy_confirmation.jsp?status=0&customerId="
+						+ customerId);
 				return;
-			}else if(status == 2){
-				response.sendRedirect("search_bonds.jsp?invalid=1&customerId=" + customerId);
+			} else if (orderStatus.getStatus()  == 2) {
+				response.sendRedirect("search_bonds.jsp?invalid=1&customerId="
+						+ customerId);
 				return;
-			}else if(status == 3){
-				response.sendRedirect("search_bonds.jsp?invalid=2&customerId=" + customerId);
+			} else if (orderStatus.getStatus()  == 3) {
+				response.sendRedirect("search_bonds.jsp?invalid=2&customerId="
+						+ customerId);
 				return;
 			}
-		}else{
-			response.sendRedirect("search_bonds.jsp?invalid=1&customerId=" + customerId);
+		} else {
+			response.sendRedirect("search_bonds.jsp?invalid=1&customerId="
+					+ customerId);
 			return;
 		}
 	} else {
