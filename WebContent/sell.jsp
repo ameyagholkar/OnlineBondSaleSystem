@@ -64,7 +64,7 @@ div.message {
 		switch(data.getStatus()){
 			case 0: out.println("Oops! Something went wrong. Transaction has been aborted. Please use the Portfolio Management button to start again."); break;
 			case 1: 
-				ResultSet rs=new BondModule().getTransactionDataFromDate(data.getProcessingTime());
+				ResultSet rs=new BondModule().getTransactionDataFromDate(data.getProcessingTime(), request.getParameter("customerId"), 1);
 				int id=0;
 				if(rs.next()){
 				%>

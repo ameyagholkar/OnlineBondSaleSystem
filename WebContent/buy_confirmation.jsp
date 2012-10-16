@@ -50,7 +50,7 @@
 				if (request.getParameter("date") != null) {
 					ResultSet rs = new BondModule()
 							.getTransactionDataFromDate(request
-									.getParameter("date"));
+									.getParameter("date"), request.getParameter("customerId"), 0);
 					rs.last();
 					int resultSize = rs.getRow();
 					rs.first();

@@ -146,7 +146,8 @@ public class BondModule {
 			String currentTime = sdf.format(dt);
 			String transactionUpdateQuery = "INSERT INTO transactions (buyer_id, seller_id, trader_id, transaction_date, bond_cusip, quantity, transaction_status) VALUES (?,?,?,?,?,?,?)";
 			queryEngine.getConnectionEngine().update(transactionUpdateQuery,
-					customerId, String.valueOf(bondReq.getInt("group_id")),
+					String.valueOf(userGroupId),
+					String.valueOf(bondReq.getInt("group_id")),
 					String.valueOf(traderId), currentTime, cusip, numOfBonds,
 					"0");
 			return new ConfirmationData(1, currentTime);
@@ -159,12 +160,17 @@ public class BondModule {
 		return new ConfirmationData(0);
 	}
 
-	public ResultSet getTransactionDataFromDate(String date) {
+	public ResultSet getTransactionDataFromDate(String date, String customerId, int sell) {
 		QueryEngine queryEngine = getQueryEngine();
+		String query = "";
 
 		try {
-			String query = "select tr.bond_cusip as cusip, tr.quantity as quantity, tr.transaction_date as date, tr.transaction_status as status, t.username as tusername, c.full_name as cname, c.balance as balance, b.price as price, b.rating_snp as rating_snp, b.rating_moody as rating_moody, tr.id as transaction_id from transactions tr join traders t on tr.trader_id = t.id join customers c on c.id = tr.buyer_id join bonds b on b.cusip = tr.bond_cusip  join groups g on b.group_id = g.id and tr.buyer_id = g.participant_id where tr.transaction_date=?";
-			ResultSet rs = queryEngine.query(query, date);
+			if (sell == 0) {
+				query = "select tr.bond_cusip as cusip, tr.quantity as quantity, tr.transaction_date as date, tr.transaction_status as status, t.username as tusername, c.full_name as cname, c.balance as balance, b.price as price, b.rating_snp as rating_snp, b.rating_moody as rating_moody, tr.id as transaction_id from transactions tr join traders t on tr.trader_id = t.id join bonds b on b.cusip = tr.bond_cusip  join groups g on b.group_id = g.id and tr.buyer_id = g.id join customers c on c.id = g.participant_id where tr.transaction_date=? and c.id=?";
+			} else {
+				query = "select tr.bond_cusip as cusip, tr.quantity as quantity, tr.transaction_date as date, tr.transaction_status as status, t.username as tusername, c.full_name as cname, c.balance as balance, b.price as price, b.rating_snp as rating_snp, b.rating_moody as rating_moody, tr.id as transaction_id from transactions tr join traders t on tr.trader_id = t.id join bonds b on b.cusip = tr.bond_cusip  join groups g on b.group_id = g.id and tr.buyer_id = 0 join customers c on c.id = g.participant_id where tr.transaction_date=? and c.id=?";
+			}
+			ResultSet rs = queryEngine.query(query, date, customerId);
 			return rs;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -240,7 +246,7 @@ public class BondModule {
 		}
 		return true;
 	}
-	
+
 	private QueryEngine getQueryEngine() {
 		QueryEngine queryEngine = null;
 
@@ -353,8 +359,8 @@ public class BondModule {
 			String currentTime = sdf.format(dt);
 			String transactionUpdateQuery = "INSERT INTO transactions (buyer_id, seller_id, trader_id, transaction_date, bond_cusip, quantity, transaction_status) VALUES (?,?,?,?,?,?,?)";
 			queryEngine.getConnectionEngine().update(transactionUpdateQuery,
-					"0", customerId, String.valueOf(traderId), currentTime,
-					cusip, quantityToSell, "0");
+					"0", String.valueOf(userGroupId), String.valueOf(traderId),
+					currentTime, cusip, quantityToSell, "0");
 			return new ConfirmationData(1, currentTime);
 
 		} catch (SQLException e) {
