@@ -25,8 +25,11 @@
 						&& (!request.getParameter("customerId")
 								.equalsIgnoreCase(""))) {
 			%>
-			<li class='active '><a
+			<li class='active'><a
 				href='search_bonds.jsp?customerId=<%=request.getParameter("customerId")%>'><span>Buy</span></a></li>
+
+			<li><a
+				href='sell.jsp?customerId=<%=request.getParameter("customerId")%>'><span>Sell</span></a></li>
 			<%
 				}
 			%>

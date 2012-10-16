@@ -88,15 +88,7 @@
 	   }
 	}
 </script>
-<style>
-div.ex {
-	width: 500px;
-	padding: 10px;
-	border: 1px solid gray;
-	margin: 10px;
-	background-color: #F81B23;
-}
-</style>
+
 </head>
 	<%
 		// Redirect to index Page if the customer id is not set.

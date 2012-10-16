@@ -25,6 +25,15 @@ div.errors {
 	background-color: #dcdcdc;
 }
 
+#bonderror {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	width: 250px;
+	padding: 10px;
+	border: 1px solid gray;
+	margin: 20px;
+	background-color: #dcdcdc;
+}
+
 body {
 	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
 }
@@ -41,4 +50,12 @@ input:focus {
     outline:none;
     border-color:#9ecaed;
     box-shadow:0 0 10px #9ecaed;
+}
+
+div.ex {
+	width: 500px;
+	padding: 10px;
+	border: 1px solid gray;
+	margin: 20px;
+	background-color: #F81B23;
 }

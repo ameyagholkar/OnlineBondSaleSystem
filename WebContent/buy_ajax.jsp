@@ -89,9 +89,7 @@
 				i++;
 			}
 
-			out.println("<tr><td colspan=12 align='center'><input type='submit'  style='margin-left: 45px; font-size: 25px; width: 200px;' value='Buy' /> or <a href='search_bonds.jsp?customerId="
-					+ request.getParameter("customerId")
-					+ "' style='font-size: 15px;'>Return to Search Page</a></td></tr>");
+			out.println("<tr><td colspan=12 align='center'><input type='submit'  style='margin-left: 45px; font-size: 25px; width: 200px;' value='Buy' /> </td></tr>");
 
 			out.println("</table>");
 			out.println("<input type='hidden' name = 'bond_name' value = '"

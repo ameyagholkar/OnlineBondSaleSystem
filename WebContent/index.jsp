@@ -158,7 +158,7 @@ div.message {
 	</table>
 	<%
 		} else {
-	%><span style="color: #bb0000">No bonds in possession.</span>
+	%><br><br><span id='bonderror'><em>Currently there are no bond holdings for this customer. Please use the menu above to Buy bonds.</em></span>
 	<%
 		}
 		}
