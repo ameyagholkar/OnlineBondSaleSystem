@@ -16,12 +16,12 @@
 </script>
 <title>Bond Buy Confirmation</title>
 </head>
-	<%
-		//Redirect to index Page if the customer id is not set
-		if (request.getParameter("customerId") == null) {
-			response.sendRedirect("index.jsp");
-		}
-	%>
+<%
+	//Redirect to index Page if the customer id is not set
+	if (request.getParameter("customerId") == null) {
+		response.sendRedirect("index.jsp");
+	}
+%>
 <body>
 	<%@ include file="header.jsp"%>
 	<div id='cssmenu'>
@@ -33,8 +33,11 @@
 						&& (!request.getParameter("customerId")
 								.equalsIgnoreCase(""))) {
 			%>
-			<li class='active '><a
+			<li class='active'><a
 				href='search_bonds.jsp?customerId=<%=request.getParameter("customerId")%>'><span>Buy</span></a></li>
+
+			<li><a
+				href='sell.jsp?customerId=<%=request.getParameter("customerId")%>'><span>Sell</span></a></li>
 			<%
 				}
 			%>
@@ -131,12 +134,15 @@
 				%>
 			</td>
 		</tr>
-		<tfoot><tr><td colspan=2>
-			<em><b>The above transaction has been successfully initiated. You
-					will receive a confirmation upon successful clearance. If you wish
-					to cancel this transaction, please press </b></em>
-			<a name="cancelBtn" href="buy_cancel.jsp?customerId=<%= request.getParameter("customerId") %>&transId=<%= rs.getInt("transaction_id") %>">Cancel</a>
-			</td></tr>
+		<tfoot>
+			<tr>
+				<td colspan=2><em><b>The above transaction has been
+							successfully initiated. You will receive a confirmation upon
+							successful clearance. If you wish to cancel this transaction,
+							please press </b></em> <a name="cancelBtn"
+					href="buy_cancel.jsp?customerId=<%=request.getParameter("customerId")%>&transId=<%=rs.getInt("transaction_id")%>">Cancel</a>
+				</td>
+			</tr>
 		</tfoot>
 	</table>
 	<%

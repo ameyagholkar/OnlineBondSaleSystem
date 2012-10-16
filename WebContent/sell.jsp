@@ -26,7 +26,7 @@ div.message {
 	<%@ include file="header.jsp"%>
 	<div id='cssmenu'>
 		<ul>
-			<li class='active '><a href='index.jsp'><span>Home/Portfolio
+			<li><a href='index.jsp'><span>Home/Portfolio
 						Management</span></a></li>
 			<%
 				if (request.getParameter("customerId") != null
@@ -34,7 +34,7 @@ div.message {
 								.equalsIgnoreCase(""))) {
 			%>
 				<li><a href='search_bonds.jsp?customerId=<%=request.getParameter("customerId")%>'><span>Buy</span></a></li>
-				<li><a href='sell.jsp?customerId=<%=request.getParameter("customerId")%>'><span>Sell</span></a></li>
+				<li class='active'><a href='sell.jsp?customerId=<%=request.getParameter("customerId")%>'><span>Sell</span></a></li>
 			<%
 				}
 			%>
