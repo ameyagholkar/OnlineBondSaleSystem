@@ -16,6 +16,12 @@
 </script>
 <title>Bond Buy Confirmation</title>
 </head>
+	<%
+		//Redirect to index Page if the customer id is not set
+		if (request.getParameter("customerId") == null) {
+			response.sendRedirect("index.jsp");
+		}
+	%>
 <body>
 	<%@ include file="header.jsp"%>
 	<div id='cssmenu'>
