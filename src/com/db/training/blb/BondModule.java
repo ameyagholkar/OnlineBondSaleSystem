@@ -248,4 +248,104 @@ public class BondModule {
 		}
 		return true;
 	}
+	
+	
+	public ConfirmationData sellBond(String cusip, String customerId,
+			String quantityToSell, String sessionId) {
+		// should get customer ID and cusip from the page.
+		// get the Group ID from the customer ID
+		// Identify the appropriate bond from the list
+		// Get the Bond data
+		// Check the quantity with the requested Sell quantity
+		// if q < rq; throw error
+		// else go ahead
+		// Reduce the quantity in the customer's bond data
+		// From the bond price, update customer's balance
+		// Increase the quantity in the market's bond data
+		QueryEngine queryEngine = null;
+
+		try {
+			queryEngine = new QueryEngine(new ConnectionEngine());
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// Get the Customers Group ID
+		ResultSet userSet;
+		try {
+			userSet = queryEngine
+					.query("select g.id as group_id, c.balance as balance from customers c, groups g where g.group_type=1 and c.id=? and c.id = g.participant_id;",
+							customerId);
+			userSet.first();
+			int userGroupId = userSet.getInt("group_id");
+			double userBalance = userSet.getDouble("balance");
+			// Select All bond data from Bonds table which corresponds to the
+			// required bond.
+			ResultSet bondReq = queryEngine.query(
+					"select * from bonds where cusip=? and group_id=?", cusip,
+					String.valueOf(userGroupId));
+			bondReq.first();
+			// If the Available quantity is greater than equal to the requested
+			// number - let the order go through
+			int availableQuantity = bondReq.getInt("quantity_owned");
+			if (availableQuantity >= Integer.parseInt(quantityToSell)) {
+				availableQuantity = availableQuantity
+						- Integer.parseInt(quantityToSell); // Get the
+				// updated
+				// Bonds.
+			} else {
+				return new ConfirmationData(2);
+			}
+
+			// Update Bonds table to reflect that the bonds are now processing -
+			// reduce the quantity - For the Market! group_id=0
+			queryEngine
+					.getConnectionEngine()
+					.update("update bonds set quantity_owned=quantity_owned+? where cusip=? and group_id=0",
+							String.valueOf(quantityToSell), cusip);
+
+			// Update the Quantity in the Customer's Bond data - Reduce it.
+			queryEngine
+					.getConnectionEngine()
+					.update("update bonds set quantity_owned=? where cusip=? and group_id=?",
+							String.valueOf(availableQuantity), cusip,
+							String.valueOf(userGroupId));
+
+			// Update User balance
+			double bondPrice = bondReq.getDouble("price");
+			userBalance = userBalance
+					+ (bondPrice * Integer.parseInt(quantityToSell));
+
+			// update Customer's Balance with the new balance.
+			queryEngine.getConnectionEngine().update(
+					"update customers c set c.balance=? where c.id=?",
+					String.valueOf(userBalance), customerId);
+
+			// Get Trader ID
+			int traderId = queryEngine.getTraderIdFromSessionId(sessionId);
+			// Get the current Date Time
+			java.util.Date dt = new java.util.Date();
+			java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat(
+					"yyyy-MM-dd HH:mm:ss");
+			String currentTime = sdf.format(dt);
+			String transactionUpdateQuery = "INSERT INTO transactions (buyer_id, seller_id, trader_id, transaction_date, bond_cusip, quantity, transaction_status) VALUES (?,?,?,?,?,?,?)";
+			queryEngine.getConnectionEngine().update(transactionUpdateQuery,
+					"0", customerId,
+					String.valueOf(traderId), currentTime, cusip,
+					quantityToSell, "0");
+			return new ConfirmationData(1, currentTime);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return null;
+
+	}
+	
 }
