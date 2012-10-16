@@ -165,75 +165,75 @@
 			<tr>
 				<th><b>Name</b></th>
 				<td colspan=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
-					type='text' id='bond_name' title="Enter the Name of Bond here."
+					type='text' name='bond_name' id='bond_name' title="Enter the Name of Bond here."
 					onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
 			</tr>
 			<tr>
 				<th><b>Issuer</b></th>
 				<td colspan=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
-					type='text' id='bond_issuer' title="Enter the Issuer Name here."
+					type='text' name='bond_issuer' id='bond_issuer' title="Enter the Issuer Name here."
 					onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
 			</tr>
 			<tr>
 				<th><b>Rating</b></th>
-				<td>Low:&nbsp;<input type='text' id='rating_low'
+				<td>Low:&nbsp;<input type='text' name='rating_low' id='rating_low'
 					title="Enter Minimum Rating here. E.g. (D/BB)"
 					onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
-				<td>High:&nbsp;<input type='text' id='rating_high'
+				<td>High:&nbsp;<input type='text' name='rating_high' id='rating_high'
 					title="Enter Maximum Rating here. E.g. (AAA/Aaa)"
 					onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
 			</tr>
 			<tr>
 				<th><b>Coupon Rate (%)</b></th>
-				<td>Low:&nbsp;<input type='text' id='coupon_rate_low'
+				<td>Low:&nbsp;<input type='text' name='coupon_rate_low' id='coupon_rate_low'
 					title="Enter Minimum Coupon Rate. E.g. (3.5)"
 					onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
-				<td>High:&nbsp;<input type='text' id='coupon_rate_high'
+				<td>High:&nbsp;<input type='text' name='coupon_rate_high' id='coupon_rate_high'
 					title="Enter Maximum Coupon Rate. E.g. (10.2)"
 					onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
 			</tr>
 			<tr>
 				<th><b>Current Yield (%)</b></th>
-				<td>Low:&nbsp;<input type='text' id='current_yield_low'
+				<td>Low:&nbsp;<input type='text' name='current_yield_low' id='current_yield_low'
 					title="Enter Minimum Current yield here. E.g. (3.5)"
 					onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
-				<td>High:&nbsp;<input type='text' id='current_yield_high'
+				<td>High:&nbsp;<input type='text' name='current_yield_high' id='current_yield_high'
 					title="Enter Maximum Current yield here. E.g. (10.2)"
 				onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
 			</tr>
 			<tr>
 				<th><b>Yield to Maturity (%)</b></th>
-				<td>Low:&nbsp;<input type='text' id='yield2maturity_low'
+				<td>Low:&nbsp;<input type='text' name='yield2maturity_low' id='yield2maturity_low'
 					title="Enter Minimum yield to Maturity here. E.g. (3.5)"
 					onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
-				<td>High:&nbsp;<input type='text' id='yield2maturity_high'
+				<td>High:&nbsp;<input type='text' name='yield2maturity_high' id='yield2maturity_high'
 					title="Enter Maximum yield to Maturity here. E.g. (10.2)"
 					onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
 			</tr>
 			<tr>
 				<th><b>Maturity Date</b></th>
-				<td>Low:&nbsp;<input type='text' id='maturity_date_low'
+				<td>Low:&nbsp;<input type='text' name='maturity_date_low' id='maturity_date_low'
 					title="Enter Minimum Maturity Date here. E.g. (YYYY-MM-DD)"
 					onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
-				<td>High:&nbsp;<input type='text' id='maturity_date_high'
+				<td>High:&nbsp;<input type='text' name='maturity_date_high' id='maturity_date_high'
 					title="Enter Maximum Maturity Date here. E.g. (YYYY-MM-DD)"
 					onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
 			</tr>
 			<tr>
 				<th><b>Par Value ($)</b></th>
-				<td>Low:&nbsp;<input type='text' id='par_value_low'
+				<td>Low:&nbsp;<input type='text' name='par_value_low' id='par_value_low'
 					title="Enter Minimum Par Value here. E.g. (50)"
 					onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
-				<td>High:&nbsp;<input type='text' id='par_value_high'
+				<td>High:&nbsp;<input type='text' name='par_value_high' id='par_value_high'
 					title="Enter Maximum Par Value here. E.g. (500)"
 					onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
 			</tr>
 			<tr>
 				<th><b>Price ($)</b></th>
-				<td>Low:&nbsp;<input type='text' id='price_low'
+				<td>Low:&nbsp;<input type='text' name='price_low' id='price_low'
 					title="Enter Minimum Price here. E.g. (300)"
 					onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
-				<td>High:&nbsp;<input type='text' id='price_high'
+				<td>High:&nbsp;<input type='text' name='price_high' id='price_high'
 					title="Enter Maximum Price here. E.g. (900)"
 					onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
 			</tr>
