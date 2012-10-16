@@ -43,6 +43,7 @@ div.message {
 		</ul>
 	</div>
 	<%
+		if(PortfolioModule.isTrader(request)){
 			String sessionId="";
 			Cookie[] cs=request.getCookies();
 			if(cs!=null){
@@ -54,7 +55,7 @@ div.message {
 			    }
 			}
 			QueryEngine engine=new QueryEngine(new ConnectionEngine());
-			ResultSet rs=engine.query("select id as 'ID', buyer_id as 'Buyer Group ID', seller_id as 'Seller Group ID', (select username from blb.traders t1 where t1.id=trader_id limit 1) as 'Trader',transaction_date as 'Date & Time', bond_cusip as 'CUSIP', quantity as 'Quantity',transaction_status as 'Status' from blb.transactions where trader_id in (select participant_id from blb.groups where id = (select g.id from blb.groups g where participant_id = (select t.id from blb.traders t inner join blb.login_session l on t.username=l.username where l.session_id=?) and group_type=0 ))",sessionId);
+			ResultSet rs=engine.query("select id as 'ID', buyer_id as 'Buyer Group ID', seller_id as 'Seller Group ID', (select username from blb.traders t1 where t1.id=trader_id limit 1) as 'Trader',transaction_date as 'Date & Time', bond_cusip as 'CUSIP', quantity as 'Quantity',(case when transaction_status=1 then 'pending' else (case when transaction_status=0 then 'initiated' else (case when transaction_status=2 then 'completed' else (case when transaction_status=3 then 'cancelled' end) end) end) end) as 'Status' from blb.transactions where trader_id in (select participant_id from blb.groups where id = (select g.id from blb.groups g where participant_id = (select t.id from blb.traders t inner join blb.login_session l on t.username=l.username where l.session_id=?) and group_type=0 ))",sessionId);
 			ResultSetMetaData metaData = rs.getMetaData();
 			if (rs.next()) {
 	%>
@@ -88,6 +89,7 @@ div.message {
 	</table>
 	<%
 			}
+		}
 	 %>
 </body>
 </html>
