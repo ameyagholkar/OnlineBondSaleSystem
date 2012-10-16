@@ -148,7 +148,7 @@ div.message {
 									out.write("<td>" + rs.getString(i) + "</td>");
 								}
 							}
-							out.write("<tr>");
+							out.write("</tr>");
 						} while (rs.next());
 			%>
 		</tbody>
