@@ -18,14 +18,9 @@ public class ConnectionEngine{
 		if(connection!=null || statement!=null){
 			return connection;
 		}
-		Class.forName("com.mysql.jdbc.Driver");// Step 1. Load the JDBC driver
-		connection = DriverManager.getConnection( "jdbc:mysql://127.0.0.1:3306/blb",  "root", "password");// Step 1. Load the JDBC driver
+		connection = ConnectionInstance.getInstance().getConnection();
 		statement=connection.createStatement();
 		return connection;
-	}
-	
-	public synchronized void destroyConnection() throws SQLException {
-		connection.close();
 	}
 	
 	public void update(String query) throws SQLException{
@@ -66,7 +61,6 @@ public class ConnectionEngine{
 	
 	public void close() throws SQLException {
 		statement.close();
-		connection.close();
 	}
 	
 	@Override
@@ -74,7 +68,6 @@ public class ConnectionEngine{
 		try {
 			resultSet.close();
 			statement.close();
-			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
