@@ -195,6 +195,7 @@ function validate(){
 		if(request.getParameter("customerId") != null
 				&& (!request.getParameter("customerId")
 						.equalsIgnoreCase(""))){
+			try{
 			ResultSet rs = PortfolioModule.getPortfolio(request);
 			ResultSetMetaData metaData = rs.getMetaData();
 			if (rs.next()) {
@@ -257,6 +258,10 @@ function validate(){
 	%><br><br><span id='bonderror'><em>Currently there are no bond holdings for this customer. Please use the menu above to Buy bonds.</em></span>
 	<%
 		}
+			}catch(Exception e){
+				response.sendRedirect("index.jsp");
+				return;
+			}
 		}else{%>
 			<span style="color: #bb0000">No customer selected.</span>
 		<%}
