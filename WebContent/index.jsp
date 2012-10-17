@@ -111,6 +111,7 @@ div.message {
 	%>		
 			<%@ include file="customer_name_balance_header.jsp"  %>
 	<% 		
+		try{
 			ResultSet rs = PortfolioModule.getPortfolio(request);
 			ResultSetMetaData metaData = rs.getMetaData();
 			if (rs.next()) {
@@ -153,6 +154,7 @@ div.message {
 							}
 							out.write("</tr>");
 						} while (rs.next());
+
 			%>
 		</tbody>
 	</table>
@@ -160,6 +162,10 @@ div.message {
 		} else {
 	%><br><br><span id='bonderror'><em>Currently there are no bond holdings for this customer. Please use the menu above to Buy bonds.</em></span>
 	<%
+		}
+		}catch(Exception e){
+			response.sendRedirect("index.jsp");
+			return;
 		}
 		}
 	%>

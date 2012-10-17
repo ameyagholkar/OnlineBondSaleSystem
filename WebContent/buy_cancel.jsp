@@ -34,8 +34,18 @@
 		</ul>
 	</div>
 	<%
-		// Redirect to index Page if the customer id is not set.
-		if (request.getParameter("customerId") == null && request.getParameter("transId") == null) {
+		//Redirect to index Page if the customer id is not set
+		if (request.getParameter("customerId") == null || "".equalsIgnoreCase(request.getParameter("customerId"))) {
+			response.sendRedirect("index.jsp");
+			return;
+		}
+		try{
+			int id=Integer.parseInt(request.getParameter("customerId"));
+			if(id<=0){
+				response.sendRedirect("index.jsp");
+				return;
+			}
+		}catch(Exception e){
 			response.sendRedirect("index.jsp");
 			return;
 		}

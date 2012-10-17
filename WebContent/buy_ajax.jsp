@@ -8,10 +8,20 @@
 <%@ page import="java.sql.*"  %>
 <%
 	//Redirect to index Page if the customer id is not set
-	if (request.getParameter("customerId") == null) {
+	if (request.getParameter("customerId") == null || "".equalsIgnoreCase(request.getParameter("customerId"))) {
 		response.sendRedirect("index.jsp");
+		return;
 	}
-
+	try{
+		int id=Integer.parseInt(request.getParameter("customerId"));
+		if(id<=0){
+			response.sendRedirect("index.jsp");
+			return;
+		}
+	}catch(Exception e){
+		response.sendRedirect("index.jsp");
+		return;
+	}
 	// DEBUG -- out.println(request.getParameter("coupon_rate_low"));
 	//DEBUG -- out.println(request.getParameter("coupon_rate_high"));
 

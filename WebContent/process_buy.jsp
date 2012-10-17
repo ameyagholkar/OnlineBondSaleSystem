@@ -17,12 +17,21 @@
 </head>
 <body>
 <%
-	// Processing for finalizing the bond purchase
-	// Redirect to index Page if the customer id is not set.		
-	if (request.getParameter("customerId") == null) {
+//Redirect to index Page if the customer id is not set
+if (request.getParameter("customerId") == null || "".equalsIgnoreCase(request.getParameter("customerId"))) {
+	response.sendRedirect("index.jsp");
+	return;
+}
+try{
+	int id=Integer.parseInt(request.getParameter("customerId"));
+	if(id<=0){
 		response.sendRedirect("index.jsp");
 		return;
 	}
+}catch(Exception e){
+	response.sendRedirect("index.jsp");
+	return;
+}
 	//Get the required data from the previous page
 	String cusip = request.getParameter("cusip");
 	String numOfBonds = request.getParameter("quantity");
@@ -55,7 +64,7 @@
 		// customer ID, Trader ID, Number of Bonds, Price, cusip, group id = 0
 		BondModule bondModule = new BondModule();
 		//Call Process Order
-		if (totalPrice > 0.0) {
+		if (totalPrice > 0.0 && (!numOfBonds.contains(".")) && (!numOfBonds.contains("-"))) {
 			ConfirmationData orderStatus = bondModule.processBondOrder(cusip, numOfBonds,
 					customerId, new Double(totalPrice).toString(),
 					sessionId);
@@ -84,7 +93,8 @@
 			return;
 		}
 	} else {
-		// TODO - Consult Team for Action to be taken here.
+		response.sendRedirect("index.jsp");
+		return;
 	}
 %>
 
