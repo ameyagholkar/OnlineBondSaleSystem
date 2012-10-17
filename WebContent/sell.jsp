@@ -227,7 +227,7 @@ function validate(){
 								}
 							}
 							%><td>
-							<form action='sell.jsp' method='post' name='sellForm' onsubmit="return validate()">
+							<form action='sell.jsp' method='post' name='sellForm'>
 							<input type="text" name="quantity" id="quantity" value=""/><input type="hidden" name="cusip" value="<% out.write(cusip); %>"/>
 							<input type="hidden" name="action" value="sell"/>
 							<input type="hidden" name="customerId" value="<%=request.getParameter("customerId")%>"/>

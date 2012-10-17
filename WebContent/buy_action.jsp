@@ -26,6 +26,10 @@
 	
 
 	function validate(){
+		if(isNaN(document.getElementById("quantity").value) || (document.getElementById("quantity").value == "" ) ){
+			alert("Please enter a number.");
+			return false;
+		}
 		if(!isNaN(document.getElementById("quantity").value)){
 			if(parseInt(document.getElementById("quantity").value) <= 0){
 				alert("Please enter a number greater than 0.");
