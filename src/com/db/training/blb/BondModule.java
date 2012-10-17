@@ -300,6 +300,10 @@ public class BondModule {
 
 	public ConfirmationData sellBond(String cusip, String customerId,
 			String quantityToSell, String sessionId) {
+		
+		if(!(Integer.parseInt(quantityToSell)>0)){
+			return new ConfirmationData(2);
+		}
 		QueryEngine queryEngine = getQueryEngine();
 
 		// Get the Customers Group ID
