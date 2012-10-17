@@ -35,6 +35,11 @@
 				alert("Please enter a number greater than 0.");
 				return false;
 			}
+			
+			if((parseFloat(document.getElementById("quantity").value) % 1) != 0){
+				alert("Please enter a whole number.");
+				return false;
+			}
 		}
 	}
 
