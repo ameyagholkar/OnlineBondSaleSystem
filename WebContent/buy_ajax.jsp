@@ -4,7 +4,8 @@
 <%@page import="com.db.training.blb.dao.ConnectionEngine"%>
 <%@page import="com.db.training.blb.dao.QueryEngine"%>
 <%@page import="com.db.training.blb.BondModule"%>
-<%@ include file="common.jsp"%>
+<%@ page import="java.util.*"  %>
+<%@ page import="java.sql.*"  %>
 <%
 	//Redirect to index Page if the customer id is not set
 	if (request.getParameter("customerId") == null) {
@@ -46,6 +47,7 @@
 			out.println("<h1>No Bonds found!</h1>");
 			// RETURN to the Previous Page
 		} else {
+			out.println("<h1>Bonds Available</h1>");
 			resultSet.last();
 			int resultSize = resultSet.getRow();
 			resultSet.first();

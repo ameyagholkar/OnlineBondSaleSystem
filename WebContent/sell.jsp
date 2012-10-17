@@ -21,6 +21,22 @@ div.message {
 	margin: 10px;
 }
 </style>
+<script type="text/javascript">
+function validate(){
+	if(isNaN(document.getElementById("quantity").value) || (document.getElementById("quantity").value == "" ) ){
+		alert("Please enter a number.");
+		return false;
+	}
+	
+	if(!isNaN(document.getElementById("quantity").value)){
+		if(parseInt(document.getElementById("quantity").value) <= 0){
+			alert("Please enter a number greater than 0.");
+			return false;
+		}
+	}
+}
+
+</script>
 </head>
 <body>
 	<%@ include file="header.jsp"%>
@@ -211,8 +227,8 @@ div.message {
 								}
 							}
 							%><td>
-							<form action='sell.jsp' method='post'>
-							<input type="text" name="quantity" value=""/><input type="hidden" name="cusip" value="<% out.write(cusip); %>"/>
+							<form action='sell.jsp' method='post' name='sellForm' onsubmit="return validate()">
+							<input type="text" name="quantity" id="quantity" value=""/><input type="hidden" name="cusip" value="<% out.write(cusip); %>"/>
 							<input type="hidden" name="action" value="sell"/>
 							<input type="hidden" name="customerId" value="<%=request.getParameter("customerId")%>"/>
 							<input type=submit value='Sell'/>

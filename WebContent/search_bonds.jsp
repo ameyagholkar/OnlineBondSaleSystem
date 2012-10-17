@@ -12,10 +12,17 @@
 <title>Search Bonds</title>
 <script type="text/javascript">
 	function validateForm() {
-		var x = document.forms["searchForm"]["coupon_rate_low"].value;
-		var y = document.forms["searchForm"]["coupon_rate_high"].value;
-		if (x == null || x == "" || y == null || y == "") {
-			alert("Coupon Rate limits cannot be blank!");
+		if (	isNaN(document.getElementById("coupon_rate_low").value) || 
+				isNaN(document.getElementById("coupon_rate_high").value) || 
+				isNaN(document.getElementById("current_yield_low").value) || 
+				isNaN(document.getElementById("current_yield_high").value) || 
+				isNaN(document.getElementById("yield2maturity_low").value) || 
+				isNaN(document.getElementById("yield2maturity_high").value) || 
+				isNaN(document.getElementById("par_value_low").value) || 
+				isNaN(document.getElementById("par_value_high").value) ||
+				isNaN(document.getElementById("price_low").value) || 
+				isNaN(document.getElementById("price_high").value) ) {
+			alert("You have entered text instead of a number. Please enter a number.");
 			return false;
 		}
 	}
@@ -82,21 +89,18 @@
 	     if(xmlhttp.status == 200) {
 	       document.getElementById("txtHint").innerHTML=xmlhttp.responseText; //Update the HTML Form element 
 	     }
-	     else {
-	        alert("Error during AJAX call. Please try again");
-	     }
 	   }
 	}
 </script>
 
 </head>
-	<%
-		// Redirect to index Page if the customer id is not set.
-		if (request.getParameter("customerId") == null) {
-			response.sendRedirect("index.jsp");
-			return;
-		}
-	%>
+<%
+	// Redirect to index Page if the customer id is not set.
+	if (request.getParameter("customerId") == null) {
+		response.sendRedirect("index.jsp");
+		return;
+	}
+%>
 <body onload="ajaxFunction(<%=request.getParameter("customerId")%>);">
 
 	<%@ include file="header.jsp"%>
@@ -109,7 +113,7 @@
 						&& (!request.getParameter("customerId")
 								.equalsIgnoreCase(""))) {
 			%>
-			<li class='active' ><a
+			<li class='active'><a
 				href='search_bonds.jsp?customerId=<%=request.getParameter("customerId")%>'><span>Buy</span></a></li>
 
 			<li><a
@@ -147,109 +151,125 @@
 	<%
 		}
 	%>
-<table>
-<tr><td>
-	<form
-		action='buy.jsp?customerId=<%=request.getQueryString().substring(
+	<table>
+		<tr>
+			<td>
+				<form
+					action='buy.jsp?customerId=<%=request.getQueryString().substring(
 					request.getQueryString().indexOf("customerId=") + 11)%>'
-		method='POST' name='searchForm'>
-		<table cellpadding='10' id='newspaper-b' style='width: 300px;'>
-			<thead>
-				<tr>
-					<td colspan=3><em>Enter the Search Criteria to search the
-							market for Bonds. Move your mouse over the fields for additional
-							help. If search is initiated without any criteria, all available
-							bonds will be displayed.</em></td>
-				</tr>
-			</thead>
-			<tr>
-				<th><b>Name</b></th>
-				<td colspan=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
-					type='text' name='bond_name' id='bond_name' title="Enter the Name of Bond here."
-					onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
-			</tr>
-			<tr>
-				<th><b>Issuer</b></th>
-				<td colspan=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
-					type='text' name='bond_issuer' id='bond_issuer' title="Enter the Issuer Name here."
-					onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
-			</tr>
-			<tr>
-				<th><b>Rating</b></th>
-				<td>Low:&nbsp;<input type='text' name='rating_low' id='rating_low'
-					title="Enter Minimum Rating here. E.g. (D/BB)"
-					onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
-				<td>High:&nbsp;<input type='text' name='rating_high' id='rating_high'
-					title="Enter Maximum Rating here. E.g. (AAA/Aaa)"
-					onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
-			</tr>
-			<tr>
-				<th><b>Coupon Rate (%)</b></th>
-				<td>Low:&nbsp;<input type='text' name='coupon_rate_low' id='coupon_rate_low'
-					title="Enter Minimum Coupon Rate. E.g. (3.5)"
-					onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
-				<td>High:&nbsp;<input type='text' name='coupon_rate_high' id='coupon_rate_high'
-					title="Enter Maximum Coupon Rate. E.g. (10.2)"
-					onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
-			</tr>
-			<tr>
-				<th><b>Current Yield (%)</b></th>
-				<td>Low:&nbsp;<input type='text' name='current_yield_low' id='current_yield_low'
-					title="Enter Minimum Current yield here. E.g. (3.5)"
-					onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
-				<td>High:&nbsp;<input type='text' name='current_yield_high' id='current_yield_high'
-					title="Enter Maximum Current yield here. E.g. (10.2)"
-				onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
-			</tr>
-			<tr>
-				<th><b>Yield to Maturity (%)</b></th>
-				<td>Low:&nbsp;<input type='text' name='yield2maturity_low' id='yield2maturity_low'
-					title="Enter Minimum yield to Maturity here. E.g. (3.5)"
-					onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
-				<td>High:&nbsp;<input type='text' name='yield2maturity_high' id='yield2maturity_high'
-					title="Enter Maximum yield to Maturity here. E.g. (10.2)"
-					onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
-			</tr>
-			<tr>
-				<th><b>Maturity Date</b></th>
-				<td>Low:&nbsp;<input type='text' name='maturity_date_low' id='maturity_date_low'
-					title="Enter Minimum Maturity Date here. E.g. (YYYY-MM-DD)"
-					onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
-				<td>High:&nbsp;<input type='text' name='maturity_date_high' id='maturity_date_high'
-					title="Enter Maximum Maturity Date here. E.g. (YYYY-MM-DD)"
-					onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
-			</tr>
-			<tr>
-				<th><b>Par Value ($)</b></th>
-				<td>Low:&nbsp;<input type='text' name='par_value_low' id='par_value_low'
-					title="Enter Minimum Par Value here. E.g. (50)"
-					onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
-				<td>High:&nbsp;<input type='text' name='par_value_high' id='par_value_high'
-					title="Enter Maximum Par Value here. E.g. (500)"
-					onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
-			</tr>
-			<tr>
-				<th><b>Price ($)</b></th>
-				<td>Low:&nbsp;<input type='text' name='price_low' id='price_low'
-					title="Enter Minimum Price here. E.g. (300)"
-					onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
-				<td>High:&nbsp;<input type='text' name='price_high' id='price_high'
-					title="Enter Maximum Price here. E.g. (900)"
-					onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
-			</tr>
-			<tr>
-				<td colspan=3 align="center"><input type='hidden'
-					id='customerId' value='<%=request.getParameter("customerId")%>' />
-					<input type='submit' value='Search'
-					style='margin-left: 45px; font-size: 25px; width: 200px;' /></td>
-			</tr>
+					method='POST' name='searchForm' onsubmit="return validateForm()">
+					<table cellpadding='10' id='newspaper-b' style='width: 300px;'>
+						<thead>
+							<tr>
+								<td colspan=3><em>Enter the Search Criteria to search
+										the market for Bonds. Move your mouse over the fields for
+										additional help. If search is initiated without any criteria,
+										all available bonds will be displayed.</em></td>
+							</tr>
+						</thead>
+						<tr>
+							<th><b>Name</b></th>
+							<td colspan=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+								type='text' name='bond_name' id='bond_name'
+								title="Enter the Name of Bond here."
+								onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
+						</tr>
+						<tr>
+							<th><b>Issuer</b></th>
+							<td colspan=2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+								type='text' name='bond_issuer' id='bond_issuer'
+								title="Enter the Issuer Name here."
+								onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
+						</tr>
+						<tr>
+							<th><b>Rating</b></th>
+							<td>Low:&nbsp;<input type='text' name='rating_low'
+								id='rating_low' title="Enter Minimum Rating here. E.g. (D/BB)"
+								onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
+							<td>High:&nbsp;<input type='text' name='rating_high'
+								id='rating_high'
+								title="Enter Maximum Rating here. E.g. (AAA/Aaa)"
+								onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
+						</tr>
+						<tr>
+							<th><b>Coupon Rate (%)</b></th>
+							<td>Low:&nbsp;<input type='text' name='coupon_rate_low'
+								id='coupon_rate_low'
+								title="Enter Minimum Coupon Rate. E.g. (3.5)"
+								onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
+							<td>High:&nbsp;<input type='text' name='coupon_rate_high'
+								id='coupon_rate_high'
+								title="Enter Maximum Coupon Rate. E.g. (10.2)"
+								onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
+						</tr>
+						<tr>
+							<th><b>Current Yield (%)</b></th>
+							<td>Low:&nbsp;<input type='text' name='current_yield_low'
+								id='current_yield_low'
+								title="Enter Minimum Current yield here. E.g. (3.5)"
+								onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
+							<td>High:&nbsp;<input type='text' name='current_yield_high'
+								id='current_yield_high'
+								title="Enter Maximum Current yield here. E.g. (10.2)"
+								onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
+						</tr>
+						<tr>
+							<th><b>Yield to Maturity (%)</b></th>
+							<td>Low:&nbsp;<input type='text' name='yield2maturity_low'
+								id='yield2maturity_low'
+								title="Enter Minimum yield to Maturity here. E.g. (3.5)"
+								onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
+							<td>High:&nbsp;<input type='text' name='yield2maturity_high'
+								id='yield2maturity_high'
+								title="Enter Maximum yield to Maturity here. E.g. (10.2)"
+								onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
+						</tr>
+						<tr>
+							<th><b>Maturity Date</b></th>
+							<td>Low:&nbsp;<input type='text' name='maturity_date_low'
+								id='maturity_date_low'
+								title="Enter Minimum Maturity Date here. E.g. (YYYY-MM-DD)"
+								onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
+							<td>High:&nbsp;<input type='text' name='maturity_date_high'
+								id='maturity_date_high'
+								title="Enter Maximum Maturity Date here. E.g. (YYYY-MM-DD)"
+								onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
+						</tr>
+						<tr>
+							<th><b>Par Value ($)</b></th>
+							<td>Low:&nbsp;<input type='text' name='par_value_low'
+								id='par_value_low'
+								title="Enter Minimum Par Value here. E.g. (50)"
+								onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
+							<td>High:&nbsp;<input type='text' name='par_value_high'
+								id='par_value_high'
+								title="Enter Maximum Par Value here. E.g. (500)"
+								onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
+						</tr>
+						<tr>
+							<th><b>Price ($)</b></th>
+							<td>Low:&nbsp;<input type='text' name='price_low'
+								id='price_low' title="Enter Minimum Price here. E.g. (300)"
+								onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
+							<td>High:&nbsp;<input type='text' name='price_high'
+								id='price_high' title="Enter Maximum Price here. E.g. (900)"
+								onchange="ajaxFunction(<%=request.getParameter("customerId")%>);"></td>
+						</tr>
+						<tr>
+							<td colspan=3 align="center"><input type='hidden'
+								id='customerId' value='<%=request.getParameter("customerId")%>' />
+								<input type='submit' value='Search'
+								style='margin-left: 45px; font-size: 25px; width: 200px;' /></td>
+						</tr>
 
-		</table>
+					</table>
 
-	</form>
-	</td><td valign='top'>
-	<div id='txtHint'></div>
-	</td></tr>
+				</form>
+			</td>
+			<td valign='top'>
+				<div id='txtHint'></div>
+			</td>
+		</tr>
 	</table>
 
 </body>

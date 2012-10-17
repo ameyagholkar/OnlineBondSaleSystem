@@ -23,6 +23,17 @@
 		//return amount;
 		document.getElementById("total").innerHTML = amount;
 	}
+	
+
+	function validate(){
+		if(!isNaN(document.getElementById("quantity").value)){
+			if(parseInt(document.getElementById("quantity").value) <= 0){
+				alert("Please enter a number greater than 0.");
+				return false;
+			}
+		}
+	}
+
 </script>
 <%
 	// Redirect to index Page if the customer id is not set.
@@ -101,7 +112,7 @@
 					+ price + ")'/>");
 
 			out.println("<form name ='userForm' method = 'POST' action='process_buy.jsp?customerId="
-					+ request.getParameter("customerId") + "'>");
+					+ request.getParameter("customerId") + "' onsubmit='return validate()'>");
 			out.print("Please enter quantity to buy <input type='text' name='quantity' id='quantity'>");
 
 			out.println("<table><tr><td>Total purchase amount ($)</td><td id='amount'></td></tr></table>");
