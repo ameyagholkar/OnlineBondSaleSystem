@@ -1,0 +1,22 @@
+Buy Local Bonds System - Team 4
+
+Installation Instructions:
+---------------------------
+The system requires the following softwares to run -
+MySQL 5.x - You can download MySQL from http://www.mysql.com/
+MySQL Workbench - You can download MySQL Workbench  from http://www.mysql.com/
+Apache Tomcat 7.0 - You can download Apache Tomcat from http://tomcat.apache.org/download-70.cgi (It is recommended to download the Windows Installer)
+Eclipse - Only for viewing the Source Code. You can download from http://eclipse.org
+
+How to deploy system on localhost:
+------------------------------------
+Install Apache Tomcat using the Windows Installer.
+Install MySQL and MySQL workbench.
+Open the database.sql file provided in the trunk folder in MySQL workbench and execute it. This creates our blb database.
+OR
+Open windows command prompt and type - mysql -u root -p password < database.sql
+Copy the ROOT.war file into the webapps directory of Tomcat.
+Start Apache Tomcat.
+Goto localhost:8080/BLB/
+System should now be online.
+
